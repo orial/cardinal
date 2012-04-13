@@ -1,0 +1,76 @@
+program ::= module
+
+module ::= simple_statement+
+
+simple_statement ::= "print" expression ("," expression)*
+
+unary_op ::= "+" | "-"
+
+binary_op ::= "+" | "-" | "*" | "/" | "%" | "**"
+
+expression ::= integer
+	| unary_op expression
+	| expression binary_op expression
+	| "(" expression ")"
+	| "input" "(" ")"
+
+unaryop ::= "not"
+
+binaryop ::= "<" | ">" | "==" | ">=" | "<=" | "!=" | "or" | "and"
+
+expression ::= float | "True" | "False"
+	| expression "if" expression "else" expression
+
+letter ::= lowercase | uppercase
+
+lowercase ::= ”a”...”z”
+
+uppercase ::= ”A”...”Z”
+
+digit ::= ”0”...”9”
+
+expression ::= identifier
+
+simple_statement ::= "pass"
+	| identifier "=" expression
+	| expression
+
+compound_statement ::= "if" expression ":" suite "else" ":" suite
+	| "while" expression ":" suite
+
+stmt_list ::= simple_statement (";" simple_statement)*
+
+statement ::= stmt_list NEWLINE | compound_stmt
+
+suite ::= stmt_list NEWLINE | NEWLINE INDENT statement+ DEDENT
+
+module ::= (NEWLINE | statement)*
+
+expression ::= "[" expression ("," expression)* "]"
+	| "{" key_datum ("," key_datum)* "}"
+	| subscription
+	| expression "is" expression
+
+key_datum ::= expression ":" expression
+
+subscription ::= expression "[" expression "]"
+
+simple_statement ::= target "=" expression
+
+target ::= identifier
+	| subscription
+
+expression ::= expression "(" [expression ("," expression)*] ")"
+	| "lambda" [identifier ("," identifier)*] ":" expression
+
+statement ::= "return" expression
+	| "def" identifier "(" [identifier ("," identifier)*] ")" ":"
+statement
+
+expression ::= expression "." identifier
+
+expression_list ::= expression ( "," expression )* [","]
+
+statement ::= "class" name ["(" expression_list ")"] ":" statement
+
+target ::= expression "." identifier
