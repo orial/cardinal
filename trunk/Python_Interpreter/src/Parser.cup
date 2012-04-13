@@ -1,0 +1,132 @@
+
+package parser;
+
+import java_cup.runtime.*;
+
+parser code
+{:
+:}
+
+action code
+{:
+:}
+
+
+terminal		PRINT,
+				PLUS,
+				MINUS,
+				UMINUS,
+				MULT,
+				DIV,
+				POW,
+				MOD,
+				LEFTPARENTHESE,
+				RIGHTPARENTHESE,
+				INPUT,
+				INTEGER,
+				COMMA,
+				NOT,
+				LESS,
+				GREATER,
+				EQUAL,
+				GREATEROREQUAL,
+				LESSOREQUAL,
+				NOTEQUAL,
+				OR,
+				AND,
+				TRUE,
+				FALSE,
+				IF,
+				ELSE,
+				FLOAT,
+				COLON,
+				IDENTIFIER,
+				NEWLINE;
+
+non terminal	program,
+				module,
+				simple_statement,
+				simple_statement_list,
+				expression,
+				expression_comma_list,
+				unary_op,
+				binary_op;
+				
+/* Precedences */
+precedence left IF, ELSE;
+precedence left OR;
+precedence left AND;
+precedence left NOT;
+precedence left LESS, GREATER, LESSOREQUAL, GREATEROREQUAL, EQUAL, NOTEQUAL;
+precedence left PLUS, MINUS;
+precedence left MULT, DIV, MOD;
+precedence left UMINUS;
+precedence left POW;
+
+program						::=	module;
+
+module						::= simple_statement simple_statement_list;
+
+simple_statement_list		::= simple_statement simple_statement_list
+								| 
+								/* epsilon */;
+							
+simple_statement			::= PRINT expression expression_comma_list;
+
+expression_comma_list		::= COMMA expression expression_comma_list
+								|
+								/*epsilon*/;
+
+unary_op					::= PLUS
+								|
+								MINUS
+								|
+								NOT;
+							
+binary_op					::= PLUS
+								|
+								MINUS
+								|
+								MULT
+								|
+								DIV
+								|
+								MOD
+								|
+								POW
+								|
+								LESS
+								|
+								GREATER
+								|
+								EQUAL
+								|
+								GREATEROREQUAL
+								|
+								LESSOREQUAL
+								|
+								NOTEQUAL
+								|
+								OR
+								|
+								AND;
+								
+expression					::= INTEGER
+								|
+								unary_op expression %prec UMINUS
+								|
+								expression binary_op expression
+								|
+								LEFTPARENTHESE expression RIGHTPARENTHESE
+								|
+								INPUT LEFTPARENTHESE RIGHTPARENTHESE
+								|
+								FLOAT
+								|
+								TRUE
+								|
+								FALSE
+								|
+								IDENTIFIER;
+				
+				
