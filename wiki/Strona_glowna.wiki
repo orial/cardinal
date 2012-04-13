@@ -5,4 +5,4 @@ Projekt ma na celu stworzenie interpretera podzbioru języka pythona. Jednak że
 
 = Details =
 
-Gramatyka
+http://code.google.com/p/cardinal/wiki/Gramatyka
