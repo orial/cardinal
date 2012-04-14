@@ -13,4 +13,9 @@ public class FloatExpression extends Expression {
 		System.out.print(value);
 	}
 
+	@Override
+	public Types getType() {
+		return Types.float_type;
+	}
+
 }

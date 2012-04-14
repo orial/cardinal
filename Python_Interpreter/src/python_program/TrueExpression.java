@@ -11,4 +11,9 @@ public class TrueExpression extends Expression {
 		System.out.print("True");
 	}
 
+	@Override
+	public Types getType() {
+		return Types.boolean_type;
+	}
+
 }

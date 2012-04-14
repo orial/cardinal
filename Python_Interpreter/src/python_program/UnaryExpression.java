@@ -16,4 +16,9 @@ public class UnaryExpression extends Expression {
 		expression.print();
 	}
 
+	@Override
+	public Types getType() {
+		return expression.getType();
+	}
+
 }

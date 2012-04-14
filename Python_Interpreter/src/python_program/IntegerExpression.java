@@ -13,4 +13,9 @@ public class IntegerExpression extends Expression {
 		System.out.print(value);
 	}
 
+	@Override
+	public Types getType() {
+		return Types.int_type;
+	}
+
 }
