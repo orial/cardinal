@@ -56,7 +56,14 @@ non terminal	program,
 				expression,
 				expression_comma_list,
 				unary_op,
-				binary_op;
+				binary_op,
+				compound_statement,
+				stmt_list,
+				simple_stmt_semicolon_list,
+				statement,
+				suite,
+				statement_list,
+				statement_newline_list;
 				
 /* Precedences */
 precedence left IF, ELSE;
@@ -71,13 +78,27 @@ precedence left POW;
 
 program						::=	module;
 
-module						::= simple_statement simple_statement_list;
+module						::= simple_statement simple_statement_list
+								|
+								statement_newline_list;
+
+statement_newline_list		::=	NEWLINE statement_newline_list 
+								|
+								statement statement_newline_list
+								|
+								/*epsilon*/; 
 
 simple_statement_list		::= simple_statement simple_statement_list
 								| 
 								/* epsilon */;
 							
-simple_statement			::= PRINT expression expression_comma_list;
+simple_statement			::= PRINT expression expression_comma_list
+								|
+								PASS
+								|
+								IDENTIFIER ASSIGN expression
+								|
+								expression;
 
 expression_comma_list		::= COMMA expression expression_comma_list
 								|
@@ -135,4 +156,26 @@ expression					::= INTEGER
 								|
 								IDENTIFIER;
 				
-				
+compound_statement			::= IF expression COLON suite ELSE COLON suite
+								|
+								IF expression COLON suite
+								|
+								WHILE expression COLON suite;
+								
+stmt_list					::= simple_statement simple_stmt_semicolon_list;
+
+simple_stmt_semicolon_list	::= SEMICOLON simple_statement simple_stmt_semicolon_list
+								|
+								/*epsilon*/;
+						
+statement					::= stmt_list NEWLINE
+								|
+								compound_statement;
+								
+suite						::= stmt_list NEWLINE
+								|
+								NEWLINE INDENT statement statement_list	DEDENT;
+								
+statement_list				::= statement statement_list
+								|
+								/*epsilon*/;
