@@ -1,7 +1,7 @@
 package python_program;
 
 public enum UnaryOperators {
-	add, sub;
+	add, sub, not;
 
 	public void print() {
 		switch(this){
@@ -10,6 +10,9 @@ public enum UnaryOperators {
 				break;
 			case sub:
 				System.out.print("-");
+				break;
+			case not:
+				System.out.print("not");
 				break;
 		}
 	}
