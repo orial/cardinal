@@ -4,6 +4,7 @@ package parser;
 import python_program.*;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Collections;
 
 import java_cup.runtime.*;
 
@@ -102,20 +103,28 @@ precedence left POW;
 precedence left LEFTSQUAREBRACKET, RIGHTSQUAREBRACKET, LEFTCURLYBRACKET, RIGHTCURLYBRACKET, LEFTPARENTHESE, RIGHTPARENTHESE;
 
 program						::=	module:list
-								{: RESULT = new Program((List<SimpleStatement>)list); :};
+								{: 	Collections.reverse((List<SimpleStatement>)list);
+									RESULT = new Program((List<SimpleStatement>)list);
+								:};
 
 module						::= simple_statement:stmt simple_statement_list:list
 									{: ((List<SimpleStatement>)list).add((SimpleStatement)stmt);
 										RESULT = list;
 									:}
 								|
-								statement_newline_list;
+								statement_newline_list:list
+								{: RESULT = list; :};
 
-statement_newline_list		::=	NEWLINE statement_newline_list 
+statement_newline_list		::=	NEWLINE statement_newline_list:list
+								{:	RESULT = list; :} 
 								|
-								statement statement_newline_list
+								statement:stmt statement_newline_list:list
+								{:	((List<SimpleStatement>)list).addAll((List<SimpleStatement>)stmt);
+									RESULT = list;
+								:}
 								|
-								/*epsilon*/; 
+								/*epsilon*/
+								{: RESULT = new LinkedList<SimpleStatement>(); :}; 
 
 simple_statement_list		::= simple_statement:stmt simple_statement_list:list
 									{: ((List<SimpleStatement>)list).add((SimpleStatement)stmt);
@@ -245,13 +254,21 @@ compound_statement			::= IF expression COLON suite ELSE COLON suite
 								|
 								CLASS IDENTIFIER LEFTPARENTHESE expression_list RIGHTPARENTHESE COLON suite;
 								
-stmt_list					::= simple_statement simple_stmt_semicolon_list;
+stmt_list					::= simple_statement:stmt simple_stmt_semicolon_list:list
+								{: ((List<SimpleStatement>)list).add((SimpleStatement)stmt); 
+									RESULT = list;
+								:};
 
-simple_stmt_semicolon_list	::= SEMICOLON simple_statement simple_stmt_semicolon_list
+simple_stmt_semicolon_list	::= SEMICOLON simple_statement:stmt simple_stmt_semicolon_list:list
+								{: ((List<SimpleStatement>)list).add((SimpleStatement)stmt); 
+									RESULT = list;
+								:}
 								|
-								/*epsilon*/;
+								/*epsilon*/
+								{: RESULT = new LinkedList<SimpleStatement>(); :};
 						
-statement					::= stmt_list NEWLINE
+statement					::= stmt_list:list NEWLINE
+								{: RESULT = list; :}
 								|
 								compound_statement;
 								
