@@ -1,4 +1,5 @@
-if foo:
-	if bar:
-	    x=42
+x = [3,1,4,8,5,9]
+x[3] = 1
+print x
+
 

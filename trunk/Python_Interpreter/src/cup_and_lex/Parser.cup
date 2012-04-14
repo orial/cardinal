@@ -47,7 +47,12 @@ terminal		PRINT,
 				WHILE,
 				SEMICOLON,
 				INDENT,
-				DEDENT;
+				DEDENT,
+				LEFTSQUAREBRACKET,
+				RIGHTSQUAREBRACKET,
+				LEFTCURLYBRACKET,
+				RIGHTCURLYBRACKET,
+				IS;
 
 non terminal	program,
 				module,
@@ -63,18 +68,25 @@ non terminal	program,
 				statement,
 				suite,
 				statement_list,
-				statement_newline_list;
+				statement_newline_list,
+				key_datum,
+				key_datum_comma_list,
+				subscription,
+				target;
+				
 				
 /* Precedences */
 precedence left IF, ELSE;
+precedence left ASSIGN;
 precedence left OR;
 precedence left AND;
 precedence left NOT;
-precedence left LESS, GREATER, LESSOREQUAL, GREATEROREQUAL, EQUAL, NOTEQUAL;
+precedence left LESS, GREATER, LESSOREQUAL, GREATEROREQUAL, EQUAL, NOTEQUAL, IS;
 precedence left PLUS, MINUS;
 precedence left MULT, DIV, MOD;
 precedence left UMINUS;
 precedence left POW;
+precedence left LEFTSQUAREBRACKET, RIGHTSQUAREBRACKET, LEFTCURLYBRACKET, RIGHTCURLYBRACKET;
 
 program						::=	module;
 
@@ -98,7 +110,9 @@ simple_statement			::= PRINT expression expression_comma_list
 								|
 								IDENTIFIER ASSIGN expression
 								|
-								expression;
+								expression
+								|
+								target ASSIGN expression;
 
 expression_comma_list		::= COMMA expression expression_comma_list
 								|
@@ -154,7 +168,15 @@ expression					::= INTEGER
 								|
 								FALSE
 								|
-								IDENTIFIER;
+								IDENTIFIER
+								|
+								LEFTSQUAREBRACKET expression expression_comma_list RIGHTSQUAREBRACKET
+								|
+								LEFTCURLYBRACKET key_datum key_datum_comma_list RIGHTCURLYBRACKET
+								|
+								subscription
+								|
+								expression IS expression;
 				
 compound_statement			::= IF expression COLON suite ELSE COLON suite
 								|
@@ -179,3 +201,13 @@ suite						::= stmt_list NEWLINE
 statement_list				::= statement statement_list
 								|
 								/*epsilon*/;
+
+key_datum					::= expression COLON expression;
+
+key_datum_comma_list		::= COMMA key_datum key_datum_comma_list
+								|
+								/*epsilon*/;
+
+subscription				::= expression LEFTSQUAREBRACKET expression RIGHTSQUAREBRACKET;
+
+target						::= subscription;
