@@ -20,20 +20,25 @@ public class Interpreter {
 		}
 		else if(args.length == 1){	//Wczytuje z lini poleceñ nazwê pliku i go interpretuje
 			try {
-				//ParserCup parser = new ParserCup(new LekserLex(new FileReader(args[0])));
-				//parser.debug_parse();
-				LekserLex lekser = new LekserLex(new FileReader(args[0]));
+				ParserCup parser = new ParserCup(new LekserLex(new FileReader(args[0])));
+				parser.debug_parse();
+				/*LekserLex lekser = new LekserLex(new FileReader(args[0]));
 				
 				Symbol tmp = lekser.next_token();
 				while(tmp.sym != sym.EOF){
-					System.out.println(tmp);
+					System.out.print(tmp + "\t");
+					
+					if(tmp.value != null){
+						System.out.print(tmp.value);
+					}
+					
 					tmp = lekser.next_token();
-				}
+					System.out.println();
+				}*/
+				
 			} catch (FileNotFoundException e) {
-				System.out.println("Error: Can't open file " + args[0]);
+				System.err.println("Error: Can't open file " + args[0]);
 				System.exit(-1);
-			} catch(IOException e){
-				System.out.println("Koniec wczytywania");
 			}catch (Exception e) {
 				e.printStackTrace();
 				System.exit(-1);

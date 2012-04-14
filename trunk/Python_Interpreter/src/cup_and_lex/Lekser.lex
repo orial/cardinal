@@ -3,6 +3,7 @@ package parser;
 
 import java_cup.runtime.*;
 import java.io.IOException;
+import java.util.Stack;
 
 import parser.sym;
 import static parser.sym.*;
@@ -18,22 +19,32 @@ import static parser.sym.*;
 %cup
 
 %init{
-	// TODO: code that goes to constructor
+	this.stack.push(0);
+	current_indent = 0;
+	yybegin(indent_state);
 %init}
 
 %{
-   private Symbol symbol(int type) {
-    return new Symbol(type, yyline, yycolumn);
-  }
+  	private Symbol symbol(int type) {
+    	return new Symbol(type, yyline, yycolumn);
+  	}
   
-  private Symbol symbol(int type, Object value) {
-    return new Symbol(type, yyline, yycolumn, value);
-  }
-
+ 	private Symbol symbol(int type, Object value) {
+    	return new Symbol(type, yyline, yycolumn, value);
+  	}
+	
+	private static final int TAB_LENGTH = 4;
+	
+	Stack<Integer> stack = new Stack<Integer>();
+	private int current_indent;
 %}
 
+%state indent_state 
+%state normal_state
+
+
 LineTerminator 	= \r|\n|\r\n
-WhiteSpace     	= {LineTerminator} | [ \t\f]
+WhiteSpace    	= [ \t\f]
 digit			= [0-9]
 integer			= {digit}+
 float			= {pointfloat} | {exponentfloat}
@@ -47,41 +58,81 @@ lowercase 		= [a-z]
 uppercase 		= [A-Z]
 identifier 		= ({letter}|"_") ({letter} | {digit} | "_")*
 
+
+
 %%
 
-"print"				{return symbol(sym.PRINT);}
-"+"					{return symbol(sym.PLUS);}
-"-"					{return symbol(sym.MINUS);}
-"**"				{return symbol(sym.POW);}
-"*"					{return symbol(sym.MULT);}
-"/"					{return symbol(sym.DIV);}
-"%"					{return symbol(sym.MOD);}
-"("					{return symbol(sym.LEFTPARENTHESE);}
-")"					{return symbol(sym.RIGHTPARENTHESE);}
-"input"				{return symbol(sym.INPUT);}
-","					{return symbol(sym.COMMA);}
-"not"				{return symbol(sym.NOT);}
-"<"					{return symbol(sym.LESS);}
-">"					{return symbol(sym.GREATER);}
-"=="				{return symbol(sym.EQUAL);}
-">="				{return symbol(sym.GREATEROREQUAL);}
-"<="				{return symbol(sym.LESSOREQUAL);}
-"!="				{return symbol(sym.NOTEQUAL);}
-"or"				{return symbol(sym.OR);}
-"and"				{return symbol(sym.AND);}
-"True"				{return symbol(sym.TRUE);}
-"False"				{return symbol(sym.FALSE);}
-"if"				{return symbol(sym.IF);}
-"else"				{return symbol(sym.ELSE);}
-":"					{return symbol(sym.COLON);}
-"pass"				{return symbol(sym.PASS);}
-"="					{return symbol(sym.ASSIGN);}
-"while"				{return symbol(sym.WHILE);}
 
-{float}				{return symbol(sym.FLOAT, new Float(yytext()));}
-{integer}			{return symbol(sym.INTEGER, new Integer(yytext()));}
-{identifier}		{return symbol(sym.IDENTIFIER, new String(yytext()));}
+<normal_state>{
+"print"				{	return symbol(sym.PRINT);}
+"+"					{	return symbol(sym.PLUS);}
+"-"					{	return symbol(sym.MINUS);}
+"**"				{	return symbol(sym.POW);}
+"*"					{	return symbol(sym.MULT);}
+"/"					{	return symbol(sym.DIV);}
+"%"					{	return symbol(sym.MOD);}
+"("					{	return symbol(sym.LEFTPARENTHESE);}
+")"					{	return symbol(sym.RIGHTPARENTHESE);}
+"input"				{	return symbol(sym.INPUT);}
+","					{	return symbol(sym.COMMA);}
+"not"				{	return symbol(sym.NOT);}
+"<"					{	return symbol(sym.LESS);}
+">"					{	return symbol(sym.GREATER);}
+"=="				{	return symbol(sym.EQUAL);}
+">="				{	return symbol(sym.GREATEROREQUAL);}
+"<="				{	return symbol(sym.LESSOREQUAL);}
+"!="				{	return symbol(sym.NOTEQUAL);}
+"or"				{	return symbol(sym.OR);}
+"and"				{	return symbol(sym.AND);}
+"True"				{	return symbol(sym.TRUE);}
+"False"				{	return symbol(sym.FALSE);}
+"if"				{	return symbol(sym.IF);}
+"else"				{	return symbol(sym.ELSE);}
+":"					{	return symbol(sym.COLON);}
+"pass"				{	return symbol(sym.PASS);}
+"="					{	return symbol(sym.ASSIGN);}
+"while"				{	return symbol(sym.WHILE);}
 
-{LineTerminator}	{return symbol(sym.NEWLINE);}
-{WhiteSpace}   		{ /* Ignore whitespace. */ }
+{float}				{	return symbol(sym.FLOAT, new Float(yytext()));}
+{integer}			{	return symbol(sym.INTEGER, new Integer(yytext()));}
+{identifier}		{	return symbol(sym.IDENTIFIER, new String(yytext()));}
+
+{WhiteSpace}		{	/*Ignore whitespaces*/}
+
+{LineTerminator}	{	yybegin(indent_state);
+						yypushback(1);
+						current_indent = 0;
+						return symbol(sym.NEWLINE);
+					}
+}
+
+
+
+<indent_state>{
+" "			   		{	current_indent++; }
+"\t"			   	{	current_indent = current_indent + TAB_LENGTH; }
+"\f"				{	/*Ignore whitespace*/}
+.					{	yypushback(1);
+						if(current_indent > stack.peek()){
+							stack.push(current_indent);
+							yybegin(normal_state);
+							return symbol(sym.INDENT);
+						}
+						else if(current_indent == stack.peek()){
+							yybegin(normal_state);
+						}
+						else{
+							int tmp = stack.pop();
+							return symbol(sym.DEDENT);
+						}
+					}
+{LineTerminator}	{	if(current_indent < stack.peek()){
+							int tmp = stack.pop();
+							return symbol(sym.DEDENT);
+						}
+					}
+}
+
+
+
 .           		{System.out.println("Illegal char, '" + yytext() + "' line: " + yyline + ", column: " + yychar);}
