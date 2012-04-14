@@ -13,6 +13,7 @@ public class PrintStatement extends SimpleStatement {
 	
 	@Override
 	public void print() {
+		System.out.print("print ");
 		Iterator<Expression> iterator = expressions.iterator();
 		while(iterator.hasNext()){
 			iterator.next().print();

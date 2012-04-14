@@ -1,6 +1,10 @@
 
 package parser;
 
+import python_program.*;
+import java.util.LinkedList;
+import java.util.List;
+
 import java_cup.runtime.*;
 
 parser code
@@ -97,9 +101,13 @@ precedence left UMINUS;
 precedence left POW;
 precedence left LEFTSQUAREBRACKET, RIGHTSQUAREBRACKET, LEFTCURLYBRACKET, RIGHTCURLYBRACKET, LEFTPARENTHESE, RIGHTPARENTHESE;
 
-program						::=	module;
+program						::=	module:list
+								{: RESULT = new Program((List<SimpleStatement>)list); :};
 
-module						::= simple_statement simple_statement_list
+module						::= simple_statement:stmt simple_statement_list:list
+									{: ((List<SimpleStatement>)list).add((SimpleStatement)stmt);
+										RESULT = list;
+									:}
 								|
 								statement_newline_list;
 
@@ -109,11 +117,18 @@ statement_newline_list		::=	NEWLINE statement_newline_list
 								|
 								/*epsilon*/; 
 
-simple_statement_list		::= simple_statement simple_statement_list
+simple_statement_list		::= simple_statement:stmt simple_statement_list:list
+									{: ((List<SimpleStatement>)list).add((SimpleStatement)stmt);
+										RESULT = list;
+									:}
 								| 
-								/* epsilon */;
+								/* epsilon */
+									{: RESULT = new LinkedList<SimpleStatement>(); :};
 							
-simple_statement			::= PRINT expression expression_comma_list
+simple_statement			::= PRINT expression:expr expression_comma_list:list
+									{: ((List<Expression>)list).add((Expression)expr); 
+										RESULT = new PrintStatement((List<Expression>)list); 
+									:}
 								|
 								PASS
 								|
@@ -125,27 +140,39 @@ simple_statement			::= PRINT expression expression_comma_list
 								|
 								RETURN expression;
 
-expression_comma_list		::= COMMA expression expression_comma_list
+expression_comma_list		::= COMMA expression:expr expression_comma_list:list
+									{: ((List<Expression>)list).add((Expression)expr); 
+										RESULT = list;
+									:}
 								|
-								/*epsilon*/;
+								/*epsilon*/
+									{: RESULT = new LinkedList<Expression>(); :};
 
 unary_op					::= PLUS
+									{: RESULT = UnaryOperators.add; :}
 								|
 								MINUS
+									{: RESULT = UnaryOperators.sub; :}
 								|
 								NOT;
 							
 binary_op					::= PLUS
+									{: RESULT = BinaryOperators.add; :}
 								|
 								MINUS
+									{: RESULT = BinaryOperators.sub; :}
 								|
 								MULT
+									{: RESULT = BinaryOperators.mult; :}
 								|
 								DIV
+									{: RESULT = BinaryOperators.div; :}
 								|
 								MOD
+									{: RESULT = BinaryOperators.mod; :}
 								|
 								POW
+									{: RESULT = BinaryOperators.pow; :}
 								|
 								LESS
 								|
@@ -163,15 +190,20 @@ binary_op					::= PLUS
 								|
 								AND;
 								
-expression					::= INTEGER
+expression					::= INTEGER:value
+									{: RESULT = new IntegerExpression((int)value); :}
 								|
-								unary_op expression %prec UMINUS
+								unary_op:op expression:expr
+									{: RESULT = new UnaryExpression((UnaryOperators) op, (Expression) expr); :} %prec UMINUS
 								|
-								expression binary_op expression
+								expression:expr1 binary_op:op expression:expr2
+									{: RESULT = new BinaryExpression((Expression) expr1, (BinaryOperators) op, (Expression) expr2); :}
 								|
-								LEFTPARENTHESE expression RIGHTPARENTHESE
+								LEFTPARENTHESE expression:expr RIGHTPARENTHESE
+									{: RESULT = new ParenthesesExpression((Expression)expr); :}
 								|
 								INPUT LEFTPARENTHESE RIGHTPARENTHESE
+									{: RESULT = new InputExpression(); :}
 								|
 								FLOAT
 								|
