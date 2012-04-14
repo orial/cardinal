@@ -24,4 +24,28 @@ else:
 	C.foo = __foo
 print 4
 
+o.x = 40
+o.move(2)
+print o.x
+
+x = 3
+
+class C:
+    if True:
+        y = x
+print C.y
+
+f = lambda z: x
+class C:
+    x = 3
+    foo = f
+x = 72
+print C.foo()
+
+class C:
+    x = 3
+    def __init__(o,n):
+        print n
+
+print o.x
 
