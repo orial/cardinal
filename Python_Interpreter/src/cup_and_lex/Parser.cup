@@ -174,7 +174,7 @@ statement					::= stmt_list NEWLINE
 								
 suite						::= stmt_list NEWLINE
 								|
-								NEWLINE INDENT statement statement_list	DEDENT;
+								NEWLINE INDENT statement statement_list DEDENT;
 								
 statement_list				::= statement statement_list
 								|

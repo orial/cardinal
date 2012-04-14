@@ -100,7 +100,6 @@ identifier 		= ({letter}|"_") ({letter} | {digit} | "_")*
 {WhiteSpace}		{	/*Ignore whitespaces*/}
 
 {LineTerminator}	{	yybegin(indent_state);
-						yypushback(1);
 						current_indent = 0;
 						return symbol(sym.NEWLINE);
 					}
@@ -126,7 +125,16 @@ identifier 		= ({letter}|"_") ({letter} | {digit} | "_")*
 							return symbol(sym.DEDENT);
 						}
 					}
-{LineTerminator}	{	if(current_indent < stack.peek()){
+{LineTerminator}	{if(current_indent > stack.peek()){
+							stack.push(current_indent);
+							yybegin(normal_state);
+							return symbol(sym.INDENT);
+						}
+						else if(current_indent == stack.peek()){
+							yybegin(normal_state);
+						}
+						else{
+							yypushback(1);
 							int tmp = stack.pop();
 							return symbol(sym.DEDENT);
 						}
