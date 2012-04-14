@@ -11,4 +11,9 @@ public class InputExpression extends Expression {
 		System.out.print("input ()");
 	}
 
+	@Override
+	public Types getType() {
+		return Types.nondefined_type;
+	}
+
 }

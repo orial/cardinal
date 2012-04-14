@@ -14,4 +14,9 @@ public class ParenthesesExpression extends Expression{
 		expression.print();
 		System.out.print(")");
 	}
+
+	@Override
+	public Types getType() {
+		return expression.getType();
+	}
 }

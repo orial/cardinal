@@ -11,4 +11,9 @@ public class FalseExpression extends Expression {
 		System.out.print("False");
 	}
 
+	@Override
+	public Types getType() {
+		return Types.boolean_type;
+	}
+
 }

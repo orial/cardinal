@@ -21,4 +21,9 @@ public class BinaryExpression extends Expression {
 		expression2.print();
 	}
 
+	@Override
+	public Types getType() {
+		return expression1.getType();
+	}
+
 }
