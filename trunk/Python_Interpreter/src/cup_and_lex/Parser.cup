@@ -41,7 +41,13 @@ terminal		PRINT,
 				FLOAT,
 				COLON,
 				IDENTIFIER,
-				NEWLINE;
+				NEWLINE,
+				PASS,
+				ASSIGN,
+				WHILE,
+				SEMICOLON,
+				INDENT,
+				DEDENT;
 
 non terminal	program,
 				module,

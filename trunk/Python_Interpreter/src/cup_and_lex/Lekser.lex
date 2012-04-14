@@ -74,6 +74,9 @@ identifier 		= ({letter}|"_") ({letter} | {digit} | "_")*
 "if"				{return symbol(sym.IF);}
 "else"				{return symbol(sym.ELSE);}
 ":"					{return symbol(sym.COLON);}
+"pass"				{return symbol(sym.PASS);}
+"="					{return symbol(sym.ASSIGN);}
+"while"				{return symbol(sym.WHILE);}
 
 {float}				{return symbol(sym.FLOAT, new Float(yytext()));}
 {integer}			{return symbol(sym.INTEGER, new Integer(yytext()));}
