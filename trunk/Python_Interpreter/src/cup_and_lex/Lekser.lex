@@ -97,6 +97,9 @@ identifier 		= ({letter}|"_") ({letter} | {digit} | "_")*
 "{"					{	return symbol(sym.LEFTCURLYBRACKET);}
 "}"					{	return symbol(sym.RIGHTCURLYBRACKET);}
 "is"				{	return symbol(sym.IS);}
+"def"				{	return symbol(sym.DEF);}
+"lambda"			{	return symbol(sym.LAMBDA);}
+"return"			{	return symbol(sym.RETURN);}
 
 {float}				{	return symbol(sym.FLOAT, new Float(yytext()));}
 {integer}			{	return symbol(sym.INTEGER, new Integer(yytext()));}

@@ -1,5 +1,12 @@
-x = [3,1,4,8,5,9]
-x[3] = 1
-print x
+def sum(l, n):
+	i = 0
+	s = 0
+	while i != n:
+		s = s + l[i]
+		i = i + 1
+	return s
+sum([1,2,3], 3)
+
+sum([4,5,6], 3)
 
 

@@ -52,7 +52,10 @@ terminal		PRINT,
 				RIGHTSQUAREBRACKET,
 				LEFTCURLYBRACKET,
 				RIGHTCURLYBRACKET,
-				IS;
+				IS,
+				LAMBDA,
+				DEF,
+				RETURN;
 
 non terminal	program,
 				module,
@@ -72,10 +75,12 @@ non terminal	program,
 				key_datum,
 				key_datum_comma_list,
 				subscription,
-				target;
+				target,
+				identifier_comma_list;
 				
 				
 /* Precedences */
+precedence left LAMBDA;
 precedence left IF, ELSE;
 precedence left ASSIGN;
 precedence left OR;
@@ -86,7 +91,7 @@ precedence left PLUS, MINUS;
 precedence left MULT, DIV, MOD;
 precedence left UMINUS;
 precedence left POW;
-precedence left LEFTSQUAREBRACKET, RIGHTSQUAREBRACKET, LEFTCURLYBRACKET, RIGHTCURLYBRACKET;
+precedence left LEFTSQUAREBRACKET, RIGHTSQUAREBRACKET, LEFTCURLYBRACKET, RIGHTCURLYBRACKET, LEFTPARENTHESE, RIGHTPARENTHESE;
 
 program						::=	module;
 
@@ -112,7 +117,9 @@ simple_statement			::= PRINT expression expression_comma_list
 								|
 								expression
 								|
-								target ASSIGN expression;
+								target ASSIGN expression
+								|
+								RETURN expression;
 
 expression_comma_list		::= COMMA expression expression_comma_list
 								|
@@ -176,13 +183,25 @@ expression					::= INTEGER
 								|
 								subscription
 								|
-								expression IS expression;
+								expression IS expression
+								|
+								expression LEFTPARENTHESE RIGHTPARENTHESE
+								|
+								expression LEFTPARENTHESE expression expression_comma_list RIGHTPARENTHESE
+								|
+								LAMBDA COLON expression
+								|
+								LAMBDA IDENTIFIER identifier_comma_list COLON expression;
 				
 compound_statement			::= IF expression COLON suite ELSE COLON suite
 								|
 								IF expression COLON suite
 								|
-								WHILE expression COLON suite;
+								WHILE expression COLON suite
+								|
+								DEF IDENTIFIER LEFTPARENTHESE RIGHTPARENTHESE COLON suite
+								|
+								DEF IDENTIFIER LEFTPARENTHESE IDENTIFIER identifier_comma_list RIGHTPARENTHESE COLON suite;
 								
 stmt_list					::= simple_statement simple_stmt_semicolon_list;
 
@@ -193,6 +212,7 @@ simple_stmt_semicolon_list	::= SEMICOLON simple_statement simple_stmt_semicolon_
 statement					::= stmt_list NEWLINE
 								|
 								compound_statement;
+								
 								
 suite						::= stmt_list NEWLINE
 								|
@@ -211,3 +231,7 @@ key_datum_comma_list		::= COMMA key_datum key_datum_comma_list
 subscription				::= expression LEFTSQUAREBRACKET expression RIGHTSQUAREBRACKET;
 
 target						::= subscription;
+
+identifier_comma_list		::= COMMA IDENTIFIER identifier_comma_list
+								|
+								/*epsilon*/;
