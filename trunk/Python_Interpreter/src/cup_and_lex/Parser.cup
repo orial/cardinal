@@ -55,7 +55,9 @@ terminal		PRINT,
 				IS,
 				LAMBDA,
 				DEF,
-				RETURN;
+				RETURN,
+				FULLSTOP,
+				CLASS;
 
 non terminal	program,
 				module,
@@ -76,13 +78,15 @@ non terminal	program,
 				key_datum_comma_list,
 				subscription,
 				target,
-				identifier_comma_list;
+				identifier_comma_list,
+				expression_list;
 				
 				
 /* Precedences */
 precedence left LAMBDA;
 precedence left IF, ELSE;
 precedence left ASSIGN;
+precedence left FULLSTOP;
 precedence left OR;
 precedence left AND;
 precedence left NOT;
@@ -191,7 +195,9 @@ expression					::= INTEGER
 								|
 								LAMBDA COLON expression
 								|
-								LAMBDA IDENTIFIER identifier_comma_list COLON expression;
+								LAMBDA IDENTIFIER identifier_comma_list COLON expression
+								|
+								expression FULLSTOP IDENTIFIER;
 				
 compound_statement			::= IF expression COLON suite ELSE COLON suite
 								|
@@ -201,7 +207,11 @@ compound_statement			::= IF expression COLON suite ELSE COLON suite
 								|
 								DEF IDENTIFIER LEFTPARENTHESE RIGHTPARENTHESE COLON suite
 								|
-								DEF IDENTIFIER LEFTPARENTHESE IDENTIFIER identifier_comma_list RIGHTPARENTHESE COLON suite;
+								DEF IDENTIFIER LEFTPARENTHESE IDENTIFIER identifier_comma_list RIGHTPARENTHESE COLON suite
+								|
+								CLASS IDENTIFIER COLON suite
+								|
+								CLASS IDENTIFIER LEFTPARENTHESE expression_list RIGHTPARENTHESE COLON suite;
 								
 stmt_list					::= simple_statement simple_stmt_semicolon_list;
 
@@ -230,8 +240,12 @@ key_datum_comma_list		::= COMMA key_datum key_datum_comma_list
 
 subscription				::= expression LEFTSQUAREBRACKET expression RIGHTSQUAREBRACKET;
 
-target						::= subscription;
+target						::= subscription
+								|
+								expression FULLSTOP IDENTIFIER;
 
 identifier_comma_list		::= COMMA IDENTIFIER identifier_comma_list
 								|
 								/*epsilon*/;
+								
+expression_list				::= expression expression_comma_list;
