@@ -92,6 +92,11 @@ identifier 		= ({letter}|"_") ({letter} | {digit} | "_")*
 "pass"				{	return symbol(sym.PASS);}
 "="					{	return symbol(sym.ASSIGN);}
 "while"				{	return symbol(sym.WHILE);}
+"["					{	return symbol(sym.LEFTSQUAREBRACKET);}
+"]"					{	return symbol(sym.RIGHTSQUAREBRACKET);}
+"{"					{	return symbol(sym.LEFTCURLYBRACKET);}
+"}"					{	return symbol(sym.RIGHTCURLYBRACKET);}
+"is"				{	return symbol(sym.IS);}
 
 {float}				{	return symbol(sym.FLOAT, new Float(yytext()));}
 {integer}			{	return symbol(sym.INTEGER, new Integer(yytext()));}
