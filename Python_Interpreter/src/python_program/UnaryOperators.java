@@ -12,7 +12,7 @@ public enum UnaryOperators {
 				System.out.print("-");
 				break;
 			case not:
-				System.out.print("not");
+				System.out.print("not ");
 				break;
 		}
 	}

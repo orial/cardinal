@@ -163,7 +163,8 @@ unary_op					::= PLUS
 								MINUS
 									{: RESULT = UnaryOperators.sub; :}
 								|
-								NOT;
+								NOT
+									{: RESULT = UnaryOperators.not; :};
 							
 binary_op					::= PLUS
 									{: RESULT = BinaryOperators.add; :}
@@ -184,23 +185,31 @@ binary_op					::= PLUS
 									{: RESULT = BinaryOperators.pow; :}
 								|
 								LESS
+									{: RESULT = BinaryOperators.less; :}
 								|
 								GREATER
+									{: RESULT = BinaryOperators.greater; :}
 								|
 								EQUAL
+									{: RESULT = BinaryOperators.equal; :}
 								|
 								GREATEROREQUAL
+									{: RESULT = BinaryOperators.greaterorequal; :}
 								|
 								LESSOREQUAL
+									{: RESULT = BinaryOperators.lessorequal; :}
 								|
 								NOTEQUAL
+									{: RESULT = BinaryOperators.notequal; :}
 								|
 								OR
+									{: RESULT = BinaryOperators.or; :}
 								|
-								AND;
+								AND
+									{: RESULT = BinaryOperators.and; :};
 								
 expression					::= INTEGER:value
-									{: RESULT = new IntegerExpression((int)value); :}
+									{: RESULT = new IntegerExpression((String)value); :}
 								|
 								unary_op:op expression:expr
 									{: RESULT = new UnaryExpression((UnaryOperators) op, (Expression) expr); :} %prec UMINUS
@@ -214,11 +223,14 @@ expression					::= INTEGER:value
 								INPUT LEFTPARENTHESE RIGHTPARENTHESE
 									{: RESULT = new InputExpression(); :}
 								|
-								FLOAT
+								FLOAT:value
+									{: RESULT = new FloatExpression(((String)value)); :}
 								|
 								TRUE
+									{: RESULT = new TrueExpression(); :}
 								|
 								FALSE
+									{: RESULT = new FalseExpression(); :}
 								|
 								IDENTIFIER
 								|

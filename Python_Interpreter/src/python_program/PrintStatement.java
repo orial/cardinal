@@ -14,8 +14,11 @@ public class PrintStatement extends SimpleStatement {
 	@Override
 	public void print() {
 		System.out.print("print ");
+		
 		Iterator<Expression> iterator = expressions.iterator();
+		iterator.next().print();
 		while(iterator.hasNext()){
+			System.out.print(", ");
 			iterator.next().print();
 		}
 	}
