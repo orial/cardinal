@@ -2,9 +2,9 @@ package python_program;
 
 public class FloatExpression extends Expression {
 
-	float value;
+	String value;
 	
-	public FloatExpression(float value){
+	public FloatExpression(String value){
 		this.value = value;
 	}
 	

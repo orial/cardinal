@@ -2,9 +2,9 @@ package python_program;
 
 public class IntegerExpression extends Expression {
 	
-	int value;
+	String value;
 	
-	public IntegerExpression(int value){
+	public IntegerExpression(String value){
 		this.value = value;
 	}
 	

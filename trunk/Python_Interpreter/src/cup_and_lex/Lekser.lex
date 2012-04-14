@@ -102,9 +102,9 @@ identifier 		= ({letter}|"_") ({letter} | {digit} | "_")*
 "return"			{	return symbol(sym.RETURN);}
 "class"				{	return symbol(sym.CLASS);}
 
-{float}				{	return symbol(sym.FLOAT, new Float(yytext()));}
-{integer}			{	return symbol(sym.INTEGER, new Integer(yytext()));}
-{identifier}		{	return symbol(sym.IDENTIFIER, new String(yytext()));}
+{float}				{	return symbol(sym.FLOAT, yytext());}
+{integer}			{	return symbol(sym.INTEGER, yytext());}
+{identifier}		{	return symbol(sym.IDENTIFIER, yytext());}
 "."					{	return symbol(sym.FULLSTOP);}
 
 {WhiteSpace}		{	/*Ignore whitespaces*/}

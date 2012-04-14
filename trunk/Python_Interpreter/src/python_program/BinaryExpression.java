@@ -15,7 +15,9 @@ public class BinaryExpression extends Expression {
 	@Override
 	public void print() {
 		expression1.print();
+		System.out.print(" ");
 		operator.print();
+		System.out.print(" ");
 		expression2.print();
 	}
 
