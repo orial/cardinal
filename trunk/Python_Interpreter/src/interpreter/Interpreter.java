@@ -3,6 +3,7 @@ package interpreter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 import java_cup.runtime.Symbol;
 
@@ -17,7 +18,13 @@ public class Interpreter {
 	{
 		if(args.length == 0)		//Uruchamia interpreter
 		{
-			
+			try {
+				ParserCup parser = new ParserCup(new LekserLex(new InputStreamReader(System.in)));
+				Program program = (Program)parser.debug_parse().value;
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		else if(args.length == 1){	//Wczytuje z lini poleceñ nazwê pliku i go interpretuje
 			try {
