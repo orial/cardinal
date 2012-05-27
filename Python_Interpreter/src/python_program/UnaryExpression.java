@@ -12,8 +12,10 @@ public class UnaryExpression extends Expression {
 	
 	@Override
 	public void print() {
+		System.out.print("(");
 		operator.print();
 		expression.print();
+		System.out.print(")");
 	}
 
 	@Override
