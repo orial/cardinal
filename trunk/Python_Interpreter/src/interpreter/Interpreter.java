@@ -26,7 +26,7 @@ public class Interpreter {
 				e.printStackTrace();
 			}
 		}
-		else if(args.length == 1){	//Wczytuje z lini poleceñ nazwê pliku i go interpretuje
+		else if(args.length == 1){	//Wczytuje z lini polecen nazwe pliku i go interpretuje
 			try {
 				ParserCup parser = new ParserCup(new LekserLex(new FileReader(args[0])));
 				Program program = (Program)parser.parse().value;
