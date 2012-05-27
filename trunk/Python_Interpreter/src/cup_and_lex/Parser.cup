@@ -84,7 +84,8 @@ non terminal	program,
 				subscription,
 				target,
 				identifier_comma_list,
-				expression_list;
+				expression_list,
+				arithmetic_expression;
 				
 				
 /* Precedences */
@@ -112,18 +113,18 @@ module						::= simple_statement:stmt simple_statement_list:list
 										RESULT = list;
 									:}
 								|
-								statement_newline_list:list
+								statement_newline_list:list							//#3
 								{: RESULT = list; :};
 
 statement_newline_list		::=	NEWLINE statement_newline_list:list
 								{:	RESULT = list; :} 
 								|
-								statement:stmt statement_newline_list:list
+								statement:stmt statement_newline_list:list			//#5
 								{:	((List<SimpleStatement>)list).addAll((List<SimpleStatement>)stmt);
 									RESULT = list;
 								:}
 								|
-								/*epsilon*/
+								/*epsilon*/											//#6
 								{: RESULT = new LinkedList<SimpleStatement>(); :}; 
 
 simple_statement_list		::= simple_statement:stmt simple_statement_list:list
@@ -134,7 +135,7 @@ simple_statement_list		::= simple_statement:stmt simple_statement_list:list
 								/* epsilon */
 									{: RESULT = new LinkedList<SimpleStatement>(); :};
 							
-simple_statement			::= PRINT expression:expr expression_comma_list:list
+simple_statement			::= PRINT expression:expr expression_comma_list:list			//#9
 									{: ((List<Expression>)list).add((Expression)expr); 
 										RESULT = new PrintStatement((List<Expression>)list); 
 									:}
@@ -154,35 +155,29 @@ expression_comma_list		::= COMMA expression:expr expression_comma_list:list
 										RESULT = list;
 									:}
 								|
-								/*epsilon*/
+								/*epsilon*/									//#16
 									{: RESULT = new LinkedList<Expression>(); :};
 
-unary_op					::= PLUS
-									{: RESULT = UnaryOperators.add; :}
-								|
-								MINUS
-									{: RESULT = UnaryOperators.sub; :}
-								|
-								NOT
+unary_op					::= NOT
 									{: RESULT = UnaryOperators.not; :};
 							
 binary_op					::= PLUS
-									{: RESULT = BinaryOperators.add; :}
+									{: RESULT = BinaryOperators.add; :}		%prec PLUS
 								|
 								MINUS
-									{: RESULT = BinaryOperators.sub; :}
-								|
+									{: RESULT = BinaryOperators.sub; :}		%prec MINUS
+								|											//#22
 								MULT
-									{: RESULT = BinaryOperators.mult; :}
+									{: RESULT = BinaryOperators.mult; :}	%prec MULT
 								|
-								DIV
-									{: RESULT = BinaryOperators.div; :}
+								DIV											//#23
+									{: RESULT = BinaryOperators.div; :}		%prec DIV
 								|
 								MOD
-									{: RESULT = BinaryOperators.mod; :}
+									{: RESULT = BinaryOperators.mod; :}		%prec MOD
 								|
 								POW
-									{: RESULT = BinaryOperators.pow; :}
+									{: RESULT = BinaryOperators.pow; :}		%prec POW
 								|
 								LESS
 									{: RESULT = BinaryOperators.less; :}
@@ -207,15 +202,36 @@ binary_op					::= PLUS
 								|
 								AND
 									{: RESULT = BinaryOperators.and; :};
-								
-expression					::= INTEGER:value
+				
+arithmetic_expression		::= INTEGER:value												
 									{: RESULT = new IntegerExpression((String)value); :}
 								|
-								unary_op:op expression:expr
-									{: RESULT = new UnaryExpression((UnaryOperators) op, (Expression) expr); :} %prec UMINUS
+								MINUS expression:expr									
+									{: RESULT = new UnaryExpression(UnaryOperators.sub, (Expression) expr); :} %prec UMINUS
 								|
-								expression:expr1 binary_op:op expression:expr2
-									{: RESULT = new BinaryExpression((Expression) expr1, (BinaryOperators) op, (Expression) expr2); :}
+								PLUS expression:expr									
+									{: RESULT = new UnaryExpression(UnaryOperators.add, (Expression) expr); :} %prec UMINUS
+								|
+								expression:expr1 PLUS expression:expr2				
+									{: RESULT = new BinaryExpression((Expression) expr1, BinaryOperators.add, (Expression) expr2); :}
+								|
+								expression:expr1 MINUS expression:expr2				
+									{: RESULT = new BinaryExpression((Expression) expr1, BinaryOperators.sub, (Expression) expr2); :}
+								|
+								expression:expr1 MULT expression:expr2				
+									{: RESULT = new BinaryExpression((Expression) expr1, BinaryOperators.mult, (Expression) expr2); :}
+								|
+								expression:expr1 DIV expression:expr2				
+									{: RESULT = new BinaryExpression((Expression) expr1, BinaryOperators.div, (Expression) expr2); :}
+								|
+								expression:expr1 MOD expression:expr2				
+									{: RESULT = new BinaryExpression((Expression) expr1, BinaryOperators.mod, (Expression) expr2); :}
+								|
+								expression:expr1 POW expression:expr2				
+									{: RESULT = new BinaryExpression((Expression) expr1, BinaryOperators.pow, (Expression) expr2); :};
+								
+expression					::= arithmetic_expression:expr
+									{: RESULT = expr; :}
 								|
 								LEFTPARENTHESE expression:expr RIGHTPARENTHESE
 									{: RESULT = new ParenthesesExpression((Expression)expr); :}
@@ -266,7 +282,7 @@ compound_statement			::= IF expression COLON suite ELSE COLON suite
 								|
 								CLASS IDENTIFIER LEFTPARENTHESE expression_list RIGHTPARENTHESE COLON suite;
 								
-stmt_list					::= simple_statement:stmt simple_stmt_semicolon_list:list
+stmt_list					::= simple_statement:stmt simple_stmt_semicolon_list:list			//#59
 								{: ((List<SimpleStatement>)list).add((SimpleStatement)stmt); 
 									RESULT = list;
 								:};
@@ -276,10 +292,10 @@ simple_stmt_semicolon_list	::= SEMICOLON simple_statement:stmt simple_stmt_semic
 									RESULT = list;
 								:}
 								|
-								/*epsilon*/
+								/*epsilon*/											//#61
 								{: RESULT = new LinkedList<SimpleStatement>(); :};
 						
-statement					::= stmt_list:list NEWLINE
+statement					::= stmt_list:list NEWLINE								//#62
 								{: RESULT = list; :}
 								|
 								compound_statement;

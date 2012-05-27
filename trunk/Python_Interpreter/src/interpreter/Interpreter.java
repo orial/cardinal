@@ -29,7 +29,7 @@ public class Interpreter {
 		else if(args.length == 1){	//Wczytuje z lini polecen nazwe pliku i go interpretuje
 			try {
 				ParserCup parser = new ParserCup(new LekserLex(new FileReader(args[0])));
-				Program program = (Program)parser.parse().value;
+				Program program = (Program)parser.debug_parse().value;
 				program.print();
 				/*LekserLex lekser = new LekserLex(new FileReader(args[0]));
 				
