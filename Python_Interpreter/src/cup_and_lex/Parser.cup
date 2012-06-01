@@ -157,7 +157,6 @@ expression_comma_list		::= expression_comma_list:list COMMA expression:expr
 								expression:expr							//#16
 									{: List<Expression> list = new LinkedList<Expression>();
 									   list.add((Expression)expr);
-									   System.out.println("TU jestem!");
 									   RESULT = list;
 									:};					
 								

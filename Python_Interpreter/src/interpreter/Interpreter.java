@@ -22,7 +22,6 @@ public class Interpreter {
 				ParserCup parser = new ParserCup(new LekserLex(new InputStreamReader(System.in)));
 				Program program = (Program)parser.debug_parse().value;
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
