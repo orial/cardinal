@@ -9,8 +9,8 @@ x = 0.5
 #z = 1.0
 #A = B = C = D = E = F = 0
 
-#if A < B < C < D < E < F < w < z:
-#    print z
+if A < B < C < D < E < F < w < z:
+    print z
 
 #if 0 < 0 < 1.0:
 #    print z
