@@ -74,11 +74,8 @@ non terminal	program,
 				simple_statement_list,
 				expression,
 				expression_comma_list,
-				unary_op,
-				binary_op,
 				compound_statement,
 				stmt_list,
-				simple_stmt_semicolon_list,
 				statement,
 				suite,
 				statement_list,
@@ -160,14 +157,16 @@ simple_statement			::= PRINT expression_comma_list:list
 								RETURN expression;
 
 expression_comma_list		::= expression_comma_list:list COMMA expression:expr
-									{: ((List<Expression>)list).add((Expression)expr); 
+									{: 
+										((List<Expression>)list).add((Expression)expr); 
 										RESULT = list;
 									:}
 								|
-								expression:expr							//#16
-									{: List<Expression> list = new LinkedList<Expression>();
-									   list.add((Expression)expr);
-									   RESULT = list;
+								expression:expr							
+									{: 
+										List<Expression> list = new LinkedList<Expression>();
+										list.add((Expression)expr);
+										RESULT = list;
 									:};					
 								
 expression					::= INTEGER:value												
@@ -283,20 +282,20 @@ compound_statement			::= IF expression:expr COLON suite:list1 ELSE COLON suite:l
 								|
 								CLASS IDENTIFIER LEFTPARENTHESE expression_list RIGHTPARENTHESE COLON suite;
 								
-stmt_list					::= simple_statement:stmt simple_stmt_semicolon_list:list			//#59
-								{: ((List<Statement>)list).add((Statement)stmt); 
-									RESULT = list;
-								:};
-
-simple_stmt_semicolon_list	::= SEMICOLON simple_statement:stmt simple_stmt_semicolon_list:list
-									{: ((List<Statement>)list).add((Statement)stmt); 
+stmt_list					::= simple_statement:stmt SEMICOLON stmt_list:list
+									{: 
+										((List<Statement>)list).add((Statement)stmt);
 										RESULT = list;
 									:}
 								|
-								/*epsilon*/											//#61
-									{: RESULT = new LinkedList<Statement>(); :};
-						
-statement					::= stmt_list:list NEWLINE								//#62
+								simple_statement:stmt
+									{:
+										List<Statement> list = new LinkedList<Statement>();
+										list.add((Statement)stmt);
+										RESULT = list;
+									:};
+					
+statement					::= stmt_list:list NEWLINE								
 									{: RESULT = list; :}
 								|
 								compound_statement:stmt
