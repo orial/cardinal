@@ -1,4 +1,7 @@
-package python_program;
+package python_program.expression;
+
+import python_program.Types;
+import python_program.operators.UnaryOperators;
 
 public class UnaryExpression extends Expression {
 	

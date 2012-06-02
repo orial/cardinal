@@ -1,4 +1,6 @@
-package python_program;
+package python_program.expression;
+
+import python_program.Types;
 
 public abstract class Expression {
 
