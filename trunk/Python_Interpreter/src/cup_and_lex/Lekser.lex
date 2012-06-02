@@ -90,6 +90,7 @@ comment			= #[^\n]*
 "if"				{	return symbol(sym.IF);}
 "else"				{	return symbol(sym.ELSE);}
 ":"					{	return symbol(sym.COLON);}
+";"					{	return symbol(sym.SEMICOLON);}
 "pass"				{	return symbol(sym.PASS);}
 "="					{	return symbol(sym.ASSIGN);}
 "while"				{	return symbol(sym.WHILE);}
