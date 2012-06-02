@@ -1,6 +1,6 @@
 package python_program.statement;
 
-public class PassStatement extends SimpleStatement {
+public class PassStatement extends Statement {
 	
 	public PassStatement(){}
 	

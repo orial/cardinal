@@ -26,8 +26,8 @@ print y
 #    y = y - 1
 
 z = 4
-#while z > True:
-#    z = z - 1
+while z > True:
+    z = z - 1
 
 print x * y
 

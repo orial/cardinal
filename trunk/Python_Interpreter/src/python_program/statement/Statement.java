@@ -1,6 +1,6 @@
 package python_program.statement;
 
-public abstract class SimpleStatement {
+public abstract class Statement {
 
 	public abstract void print();
 

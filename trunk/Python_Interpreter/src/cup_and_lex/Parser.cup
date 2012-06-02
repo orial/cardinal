@@ -67,6 +67,7 @@ terminal		PRINT,
 				FULLSTOP,
 				CLASS;
 
+
 non terminal	program,
 				module,
 				simple_statement,
@@ -106,12 +107,12 @@ precedence left POW;
 precedence left LEFTSQUAREBRACKET, RIGHTSQUAREBRACKET, LEFTCURLYBRACKET, RIGHTCURLYBRACKET, LEFTPARENTHESE, RIGHTPARENTHESE;
 
 program						::=	module:list
-								{: 	Collections.reverse((List<SimpleStatement>)list);
-									RESULT = new Program((List<SimpleStatement>)list);
+								{: 	Collections.reverse((List<Statement>)list);
+									RESULT = new Program((List<Statement>)list);
 								:};
 
 module						::= simple_statement:stmt simple_statement_list:list
-									{: ((List<SimpleStatement>)list).add((SimpleStatement)stmt);
+									{: ((List<Statement>)list).add((Statement)stmt);
 										RESULT = list;
 									:}
 								|
@@ -122,20 +123,20 @@ statement_newline_list		::=	NEWLINE statement_newline_list:list
 								{:	RESULT = list; :} 
 								|
 								statement:stmt statement_newline_list:list			//#5
-								{:	((List<SimpleStatement>)list).addAll((List<SimpleStatement>)stmt);
+								{:	((List<Statement>)list).addAll((List<Statement>)stmt);
 									RESULT = list;
 								:}
 								|
 								/*epsilon*/											//#6
-								{: RESULT = new LinkedList<SimpleStatement>(); :}; 
+								{: RESULT = new LinkedList<Statement>(); :}; 
 
 simple_statement_list		::= simple_statement:stmt simple_statement_list:list
-									{: ((List<SimpleStatement>)list).add((SimpleStatement)stmt);
+									{: ((List<Statement>)list).add((Statement)stmt);
 										RESULT = list;
 									:}
 								| 
 								/* epsilon */
-									{: RESULT = new LinkedList<SimpleStatement>(); :};
+									{: RESULT = new LinkedList<Statement>(); :};
 							
 simple_statement			::= PRINT expression_comma_list:list			
 									{: 
@@ -263,7 +264,10 @@ compound_statement			::= IF expression COLON suite ELSE COLON suite
 								|
 								IF expression COLON suite
 								|
-								WHILE expression COLON suite
+								WHILE expression:expr COLON suite:list
+									{:
+										RESULT = new WhileStatement((Expression)expr, (List<Statement>)list);
+									:}
 								|
 								DEF IDENTIFIER LEFTPARENTHESE RIGHTPARENTHESE COLON suite
 								|
@@ -274,31 +278,46 @@ compound_statement			::= IF expression COLON suite ELSE COLON suite
 								CLASS IDENTIFIER LEFTPARENTHESE expression_list RIGHTPARENTHESE COLON suite;
 								
 stmt_list					::= simple_statement:stmt simple_stmt_semicolon_list:list			//#59
-								{: ((List<SimpleStatement>)list).add((SimpleStatement)stmt); 
+								{: ((List<Statement>)list).add((Statement)stmt); 
 									RESULT = list;
 								:};
 
 simple_stmt_semicolon_list	::= SEMICOLON simple_statement:stmt simple_stmt_semicolon_list:list
-								{: ((List<SimpleStatement>)list).add((SimpleStatement)stmt); 
-									RESULT = list;
-								:}
+									{: ((List<Statement>)list).add((Statement)stmt); 
+										RESULT = list;
+									:}
 								|
 								/*epsilon*/											//#61
-								{: RESULT = new LinkedList<SimpleStatement>(); :};
+									{: RESULT = new LinkedList<Statement>(); :};
 						
 statement					::= stmt_list:list NEWLINE								//#62
-								{: RESULT = list; :}
+									{: RESULT = list; :}
 								|
-								compound_statement;
-								
-								
-suite						::= stmt_list NEWLINE
+								compound_statement:stmt
+									{: 
+										List<Statement> list = new LinkedList<Statement>();
+										list.add((Statement)stmt);
+										RESULT = list;
+									:};
+																
+suite						::= stmt_list:list NEWLINE
+									{: RESULT = (List<Statement>)list;:}
 								|
-								NEWLINE INDENT statement statement_list DEDENT;
+								NEWLINE INDENT statement_list:list DEDENT
+									{: RESULT = (List<Statement>)list;	:};
 								
-statement_list				::= statement statement_list
+statement_list				::= statement_list:list statement:stmt 
+									{:
+										((List<Statement>)list).addAll((List<Statement>)stmt);
+										RESULT = list;
+									:}
 								|
-								/*epsilon*/;
+								statement : stmt
+									{:
+										List<Statement> list = new LinkedList<Statement>();
+										list.addAll((List<Statement>)stmt);
+										RESULT = list;
+									:};
 
 key_datum					::= expression COLON expression;
 
