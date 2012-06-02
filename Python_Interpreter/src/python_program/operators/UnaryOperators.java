@@ -1,4 +1,4 @@
-package python_program;
+package python_program.operators;
 
 public enum UnaryOperators {
 	add, sub, not;

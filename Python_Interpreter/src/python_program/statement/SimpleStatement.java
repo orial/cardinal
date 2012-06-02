@@ -1,4 +1,4 @@
-package python_program;
+package python_program.statement;
 
 public abstract class SimpleStatement {
 

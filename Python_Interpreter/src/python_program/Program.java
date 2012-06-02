@@ -4,6 +4,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import python_program.statement.SimpleStatement;
+
 public class Program {
 	List<SimpleStatement> statements;
 	
