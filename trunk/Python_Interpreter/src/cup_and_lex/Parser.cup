@@ -147,7 +147,10 @@ simple_statement			::= PRINT expression_comma_list:list
 										RESULT = new PassStatement();
 									:}
 								|
-								IDENTIFIER ASSIGN expression
+								IDENTIFIER:value ASSIGN expression:expr
+									{:
+										RESULT = new AssignStatement(new IdentifierExpression((String)value), (Expression)expr);
+									:}
 								|
 								expression
 								|
@@ -235,7 +238,8 @@ expression					::= INTEGER:value
 								FALSE
 									{: RESULT = new FalseExpression(); :}
 								|
-								IDENTIFIER
+								IDENTIFIER:value
+									{: RESULT = new IdentifierExpression((String)value);	:}
 								|
 								LEFTSQUAREBRACKET expression_comma_list RIGHTSQUAREBRACKET
 								|
