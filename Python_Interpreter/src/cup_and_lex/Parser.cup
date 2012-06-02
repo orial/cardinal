@@ -2,6 +2,9 @@
 package parser;
 
 import python_program.*;
+import python_program.expression.*;
+import python_program.operators.*;
+import python_program.statement.*;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Collections;
@@ -140,6 +143,9 @@ simple_statement			::= PRINT expression_comma_list:list
 									:}
 								|
 								PASS
+									{:
+										RESULT = new PassStatement();
+									:}
 								|
 								IDENTIFIER ASSIGN expression
 								|
