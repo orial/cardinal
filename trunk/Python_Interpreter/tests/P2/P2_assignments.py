@@ -1,7 +1,7 @@
 x = 100
 print x
 
-y = z = -100
+#y = z = -100
 print x+1, y+2, z+3
 
 w = x + y
@@ -9,7 +9,7 @@ w = x + y
 print w
 
 w = w + 1
-z = w = w + z + 1
+#z = w = w + z + 1
 w = w + z
 
 a=1;b=2;c=3

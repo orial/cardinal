@@ -20,7 +20,7 @@ print y
 #y = 40
 #x = 4
 
-#x = y = z = w = 4
+x = y = z = w = 4
 #while y > 0:
 #    x = 1
 #    y = y - 1

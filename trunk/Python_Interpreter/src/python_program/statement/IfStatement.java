@@ -5,19 +5,18 @@ import java.util.List;
 
 import python_program.expression.Expression;
 
-public class WhileStatement extends Statement {
+public class IfStatement extends Statement{
 	
 	Expression expression;
 	List<Statement> statementList;
-	
-	public WhileStatement(Expression expression, List<Statement> statementList){
+	public IfStatement(Expression expression, List<Statement> statementList){
 		this.expression = expression;
 		this.statementList = statementList;
 	}
 	
 	@Override
 	public void print() {
-		System.out.print("while ");
+		System.out.print("if ");
 		this.expression.print();
 		System.out.println(":");
 		

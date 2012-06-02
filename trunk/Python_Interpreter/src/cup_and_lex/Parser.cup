@@ -260,9 +260,15 @@ expression					::= INTEGER:value
 								|
 								expression FULLSTOP IDENTIFIER;
 				
-compound_statement			::= IF expression COLON suite ELSE COLON suite
+compound_statement			::= IF expression:expr COLON suite:list1 ELSE COLON suite:list2
+									{:
+										RESULT = new IfElseStatement((Expression)expr, (List<Statement>)list1, (List<Statement>)list2);
+									:}
 								|
-								IF expression COLON suite
+								IF expression:expr COLON suite:list
+									{:
+										RESULT = new IfStatement((Expression)expr, (List<Statement>)list);
+									:}
 								|
 								WHILE expression:expr COLON suite:list
 									{:
