@@ -57,6 +57,7 @@ letter 			= {lowercase} | {uppercase}
 lowercase 		= [a-z]
 uppercase 		= [A-Z]
 identifier 		= ({letter}|"_") ({letter} | {digit} | "_")*
+comment			= #[^\n]*
 
 
 
@@ -152,5 +153,5 @@ identifier 		= ({letter}|"_") ({letter} | {digit} | "_")*
 }
 
 
-
+{comment}			{	/* ignore comments*/}
 .           		{System.out.println("Illegal char, '" + yytext() + "' line: " + yyline + ", column: " + yychar);}
