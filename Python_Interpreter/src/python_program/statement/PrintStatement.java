@@ -5,7 +5,7 @@ import java.util.List;
 
 import python_program.expression.Expression;
 
-public class PrintStatement extends SimpleStatement {
+public class PrintStatement extends Statement {
 	
 	List<Expression> expressions;
 	
