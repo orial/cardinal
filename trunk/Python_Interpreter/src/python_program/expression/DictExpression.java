@@ -1,24 +1,23 @@
 package python_program.expression;
 
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 import python_program.Types;
 
-public class ListExpression extends Expression {
+public class DictExpression extends Expression {
 	
-	List<Expression> list;
+	List<KeyDatumExpression> list;
 	
-	public ListExpression(List<Expression> list) {
+	public DictExpression(List<KeyDatumExpression> list) {
 		this.list = list;
 	}
 	
 	@Override
 	public void print() {
-		System.out.print("[ ");
+		System.out.print("{ ");
 		
-		Iterator<Expression> iterator = this.list.iterator();
+		Iterator<KeyDatumExpression> iterator = this.list.iterator();
 		if(iterator.hasNext()) {
 			iterator.next().print();
 		}		
@@ -27,12 +26,12 @@ public class ListExpression extends Expression {
 			iterator.next().print();			
 		}
 	
-		System.out.print(" ]");
+		System.out.print(" }");
 	}
 
 	@Override
 	public Types getType() {
-		return Types.list_type;
+		return Types.dict_type;
 	}
 
 }

@@ -14,7 +14,7 @@
 //src/cup_and_lex/Lekser.lex/lex-skip-min=false
 //src/cup_and_lex/Parser.cup/cup-compact-red=false
 //src/cup_and_lex/Parser.cup/cup-debug=false
-//src/cup_and_lex/Parser.cup/cup-expected-conflicts=0
+//src/cup_and_lex/Parser.cup/cup-expected-conflicts=1000
 //src/cup_and_lex/Parser.cup/cup-no-positions=false
 //src/cup_and_lex/Parser.cup/cup-no-scanner=false
 //src/cup_and_lex/Parser.cup/cup-non-terms=false
