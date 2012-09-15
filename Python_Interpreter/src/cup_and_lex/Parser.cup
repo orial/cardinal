@@ -165,7 +165,9 @@ expression_comma_list		::= expression_comma_list:list COMMA expression:expr
 								expression:expr							
 									{: 
 										List<Expression> list = new LinkedList<Expression>();
-										list.add((Expression)expr);
+										if((Expression)expr != null) {
+											list.add((Expression)expr);
+										}
 										RESULT = list;
 									:};					
 								
@@ -244,7 +246,8 @@ expression					::= INTEGER:value
 								LEFTSQUAREBRACKET expression_comma_list:list RIGHTSQUAREBRACKET
 									{: RESULT = new ListExpression((List<Expression>)list);	:}
 								|
-								LEFTCURLYBRACKET key_datum key_datum_comma_list RIGHTCURLYBRACKET
+								LEFTCURLYBRACKET key_datum_comma_list:list RIGHTCURLYBRACKET
+									{: RESULT = new DictExpression((List<KeyDatumExpression>)list);	:}
 								|
 								subscription:value
 									{: RESULT = value; :}
@@ -260,7 +263,10 @@ expression					::= INTEGER:value
 								|
 								LAMBDA IDENTIFIER identifier_comma_list COLON expression
 								|
-								expression FULLSTOP IDENTIFIER;
+								expression FULLSTOP IDENTIFIER
+								|
+								/**/
+									{: RESULT = null;	:};
 				
 compound_statement			::= IF expression:expr COLON suite:list1 ELSE COLON suite:list2
 									{:
@@ -327,11 +333,25 @@ statement_list				::= statement_list:list statement:stmt
 										RESULT = list;
 									:};
 
-key_datum					::= expression COLON expression;
-
-key_datum_comma_list		::= COMMA key_datum key_datum_comma_list
+key_datum					::= expression:expr1 COLON expression:expr2
+									{: RESULT = new KeyDatumExpression((Expression)expr1, (Expression)expr2);	:}
 								|
-								/*epsilon*/;
+								/*epsilon*/
+									{: RESULT = null;	:};
+
+key_datum_comma_list		::= key_datum_comma_list:list COMMA key_datum:keyDatum
+									{:
+										((List<KeyDatumExpression>)list).add((KeyDatumExpression)keyDatum);
+										RESULT = list;
+									:}
+								|
+								key_datum:keyDatum
+									{: List<KeyDatumExpression> list = new LinkedList<KeyDatumExpression>();
+										if((KeyDatumExpression)keyDatum != null) {
+											list.add((KeyDatumExpression)keyDatum);
+										}
+										RESULT = list;	
+									:};
 
 subscription				::= expression:expr1 LEFTSQUAREBRACKET expression:expr2 RIGHTSQUAREBRACKET
 									{: RESULT = new SubscriptionExpression((Expression)expr1, (Expression)expr2); :};
