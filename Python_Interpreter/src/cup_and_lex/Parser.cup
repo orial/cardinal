@@ -1,4 +1,3 @@
-
 package parser;
 
 import python_program.*;
@@ -241,13 +240,16 @@ expression					::= INTEGER:value
 								IDENTIFIER:value
 									{: RESULT = new IdentifierExpression((String)value);	:}
 								|
-								LEFTSQUAREBRACKET expression_comma_list RIGHTSQUAREBRACKET
+								LEFTSQUAREBRACKET expression_comma_list:list RIGHTSQUAREBRACKET
+									{: RESULT = new ListExpression((List<Expression>)list);	:}
 								|
 								LEFTCURLYBRACKET key_datum key_datum_comma_list RIGHTCURLYBRACKET
 								|
-								subscription
+								subscription:value
+									{: RESULT = value; :}
 								|
-								expression IS expression
+								expression:expr1 IS expression:expr2
+									{: RESULT = new IsExpression((Expression)expr1, (Expression)expr2);	:}
 								|
 								expression LEFTPARENTHESE RIGHTPARENTHESE
 								|
@@ -330,7 +332,8 @@ key_datum_comma_list		::= COMMA key_datum key_datum_comma_list
 								|
 								/*epsilon*/;
 
-subscription				::= expression LEFTSQUAREBRACKET expression RIGHTSQUAREBRACKET;
+subscription				::= expression:expr1 LEFTSQUAREBRACKET expression:expr2 RIGHTSQUAREBRACKET
+									{: RESULT = new SubscriptionExpression((Expression)expr1, (Expression)expr2); :};
 
 target						::= subscription
 								|
