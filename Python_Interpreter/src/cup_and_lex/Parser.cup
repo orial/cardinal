@@ -151,7 +151,8 @@ simple_statement			::= PRINT expression_comma_list:list
 								|
 								expression
 								|
-								target ASSIGN expression
+								target:target ASSIGN expression:expr
+									{: RESULT = new TargetAssignStatement((Expression)target, (Expression)expr);	:}
 								|
 								RETURN expression;
 
@@ -335,7 +336,8 @@ key_datum_comma_list		::= COMMA key_datum key_datum_comma_list
 subscription				::= expression:expr1 LEFTSQUAREBRACKET expression:expr2 RIGHTSQUAREBRACKET
 									{: RESULT = new SubscriptionExpression((Expression)expr1, (Expression)expr2); :};
 
-target						::= subscription
+target						::= subscription:subscription
+									{: RESULT = subscription;	:}
 								|
 								expression FULLSTOP IDENTIFIER;
 
