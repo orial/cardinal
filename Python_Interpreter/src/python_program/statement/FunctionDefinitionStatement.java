@@ -28,7 +28,7 @@ public class FunctionDefinitionStatement extends Statement {
 			System.out.print(", ");
 			System.out.print(identifierIterator.next());
 		}
-		System.out.println(":");
+		System.out.println("):");
 		
 		System.out.println("<<");
 		Iterator<Statement> statementIterator = this.statementList.iterator();

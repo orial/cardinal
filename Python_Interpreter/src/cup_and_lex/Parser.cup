@@ -149,12 +149,14 @@ simple_statement			::= PRINT expression_comma_list:list
 										RESULT = new AssignStatement(new IdentifierExpression((String)value), (Expression)expr);
 									:}
 								|
-								expression
+								expression:expr
+									{: RESULT = new ExpressionStatement((Expression)expr);	:}
 								|
 								target:target ASSIGN expression:expr
 									{: RESULT = new TargetAssignStatement((Expression)target, (Expression)expr);	:}
 								|
-								RETURN expression;
+								RETURN expression:expr
+									{: RESULT = new ReturnStatement((Expression)expr);	:};
 
 expression_comma_list		::= expression_comma_list:list COMMA expression:expr
 									{: 
@@ -258,13 +260,21 @@ expression					::= INTEGER:value
 								expression:expr1 IS expression:expr2
 									{: RESULT = new IsExpression((Expression)expr1, (Expression)expr2);	:}
 								|
-								expression LEFTPARENTHESE RIGHTPARENTHESE
+								expression:expr LEFTPARENTHESE RIGHTPARENTHESE
+									{: RESULT = new FunctionExpression((Expression)expr, new LinkedList<Expression>());	:}
 								|
-								expression LEFTPARENTHESE expression_comma_list RIGHTPARENTHESE
+								expression:expr LEFTPARENTHESE expression_comma_list:list RIGHTPARENTHESE
+									{: RESULT = new FunctionExpression((Expression)expr, (LinkedList<Expression>)list);	:}
+									
 								|
-								LAMBDA COLON expression
+								LAMBDA COLON expression:expr
+									{: RESULT = new LambdaExpression(new LinkedList<String>(), (Expression)expr);	:}
 								|
-								LAMBDA IDENTIFIER identifier_comma_list COLON expression
+								LAMBDA IDENTIFIER:identifier identifier_comma_list:list COLON expression:expr
+									{:
+										((List<String>)list).add((String)identifier);
+										RESULT = new LambdaExpression((List<String>)list, (Expression)expr);
+									:}
 								|
 								expression FULLSTOP IDENTIFIER;
 				
@@ -283,9 +293,11 @@ compound_statement			::= IF expression:expr COLON suite:list1 ELSE COLON suite:l
 										RESULT = new WhileStatement((Expression)expr, (List<Statement>)list);
 									:}
 								|
-								DEF IDENTIFIER LEFTPARENTHESE RIGHTPARENTHESE COLON suite:list
+								DEF IDENTIFIER:identifier LEFTPARENTHESE RIGHTPARENTHESE COLON suite:list
+									{: RESULT = new FunctionDefinitionStatement((String)identifier, new LinkedList<String>(), (List<Statement>)list); 	:}
 								|
-								DEF IDENTIFIER LEFTPARENTHESE IDENTIFIER identifier_comma_list RIGHTPARENTHESE COLON suite:list
+								DEF IDENTIFIER:identifier1 LEFTPARENTHESE IDENTIFIER:identifier2 identifier_comma_list:identifierList RIGHTPARENTHESE COLON suite:list
+									{: RESULT = new FunctionDefinitionStatement((String)identifier1, (List<String>)identifierList, (List<Statement>)list); 	:}
 								|
 								CLASS IDENTIFIER COLON suite
 								|
@@ -361,8 +373,13 @@ target						::= subscription:subscription
 								|
 								expression FULLSTOP IDENTIFIER;
 
-identifier_comma_list		::= COMMA IDENTIFIER identifier_comma_list
+identifier_comma_list		::= COMMA IDENTIFIER:identifier identifier_comma_list:list
+									{: 
+										((List<String>)list).add((String)identifier);
+										RESULT = list;
+									:}
 								|
-								/*epsilon*/;
+								/*epsilon*/
+									{: RESULT = new LinkedList<String>();	:};
 								
 expression_list				::= expression_comma_list;
