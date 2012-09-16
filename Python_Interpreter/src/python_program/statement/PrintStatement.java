@@ -18,7 +18,9 @@ public class PrintStatement extends Statement {
 		System.out.print("print ");
 		
 		Iterator<Expression> iterator = expressions.iterator();
-		iterator.next().print();
+		if(iterator.hasNext()) {
+			iterator.next().print();
+		}
 		while(iterator.hasNext()){
 			System.out.print(", ");
 			iterator.next().print();
