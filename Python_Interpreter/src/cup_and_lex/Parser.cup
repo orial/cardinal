@@ -169,7 +169,10 @@ expression_comma_list		::= expression_comma_list:list COMMA expression:expr
 											list.add((Expression)expr);
 										}
 										RESULT = list;
-									:};					
+									:}
+								|
+								/**/
+									{: RESULT = new LinkedList<Expression>();	:};					
 								
 expression					::= INTEGER:value												
 									{: RESULT = new IntegerExpression((String)value); :}
@@ -263,10 +266,7 @@ expression					::= INTEGER:value
 								|
 								LAMBDA IDENTIFIER identifier_comma_list COLON expression
 								|
-								expression FULLSTOP IDENTIFIER
-								|
-								/**/
-									{: RESULT = null;	:};
+								expression FULLSTOP IDENTIFIER;
 				
 compound_statement			::= IF expression:expr COLON suite:list1 ELSE COLON suite:list2
 									{:
