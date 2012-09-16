@@ -283,9 +283,9 @@ compound_statement			::= IF expression:expr COLON suite:list1 ELSE COLON suite:l
 										RESULT = new WhileStatement((Expression)expr, (List<Statement>)list);
 									:}
 								|
-								DEF IDENTIFIER LEFTPARENTHESE RIGHTPARENTHESE COLON suite
+								DEF IDENTIFIER LEFTPARENTHESE RIGHTPARENTHESE COLON suite:list
 								|
-								DEF IDENTIFIER LEFTPARENTHESE IDENTIFIER identifier_comma_list RIGHTPARENTHESE COLON suite
+								DEF IDENTIFIER LEFTPARENTHESE IDENTIFIER identifier_comma_list RIGHTPARENTHESE COLON suite:list
 								|
 								CLASS IDENTIFIER COLON suite
 								|
