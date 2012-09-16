@@ -54,3 +54,4 @@ b = [[a]]
 c = [[b]]
 
 print a,b,c
+print
