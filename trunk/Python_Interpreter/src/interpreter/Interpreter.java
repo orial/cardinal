@@ -20,7 +20,7 @@ public class Interpreter {
 		{
 			try {
 				ParserCup parser = new ParserCup(new LekserLex(new InputStreamReader(System.in)));
-				Program program = (Program)parser.debug_parse().value;
+				Program program = (Program)parser.parse().value;
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -30,19 +30,6 @@ public class Interpreter {
 				ParserCup parser = new ParserCup(new LekserLex(new FileReader(args[0])));
 				Program program = (Program)parser.debug_parse().value;
 				program.print();
-				/*LekserLex lekser = new LekserLex(new FileReader(args[0]));
-				
-				Symbol tmp = lekser.next_token();
-				while(tmp.sym != sym.EOF){
-					System.out.print(tmp + "\t");
-					
-					if(tmp.value != null){
-						System.out.print(tmp.value);
-					}
-					
-					tmp = lekser.next_token();
-					System.out.println();
-				}*/
 				
 			} catch (FileNotFoundException e) {
 				System.err.println("Error: Can't open file " + args[0]);
