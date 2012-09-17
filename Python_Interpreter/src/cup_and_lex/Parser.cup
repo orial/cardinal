@@ -119,7 +119,8 @@ statement_newline_list		::=	NEWLINE statement_newline_list:list
 								{:	RESULT = list; :} 
 								|
 								statement:stmt statement_newline_list:list			//#5
-								{:	((List<Statement>)list).addAll((List<Statement>)stmt);
+								{:	
+									((List<Statement>)list).addAll((List<Statement>)stmt);
 									RESULT = list;
 								:}
 								|
@@ -127,7 +128,8 @@ statement_newline_list		::=	NEWLINE statement_newline_list:list
 								{: RESULT = new LinkedList<Statement>(); :}; 
 
 simple_statement_list		::= simple_statement:stmt simple_statement_list:list
-									{: ((List<Statement>)list).add((Statement)stmt);
+									{: 
+										((List<Statement>)list).add((Statement)stmt);
 										RESULT = list;
 									:}
 								| 
@@ -276,7 +278,8 @@ expression					::= INTEGER:value
 										RESULT = new LambdaExpression((List<String>)list, (Expression)expr);
 									:}
 								|
-								expression FULLSTOP IDENTIFIER;
+								expression:expr FULLSTOP IDENTIFIER:identifier
+									{: RESULT = new FullstopExpression((Expression)expr, (String)identifier);	:};
 				
 compound_statement			::= IF expression:expr COLON suite:list1 ELSE COLON suite:list2
 									{:
@@ -299,9 +302,11 @@ compound_statement			::= IF expression:expr COLON suite:list1 ELSE COLON suite:l
 								DEF IDENTIFIER:identifier1 LEFTPARENTHESE IDENTIFIER:identifier2 identifier_comma_list:identifierList RIGHTPARENTHESE COLON suite:list
 									{: RESULT = new FunctionDefinitionStatement((String)identifier1, (List<String>)identifierList, (List<Statement>)list); 	:}
 								|
-								CLASS IDENTIFIER COLON suite
+								CLASS IDENTIFIER:identifier COLON suite:list
+									{: RESULT = new ClassStatement((String)identifier, new LinkedList<Expression>(), (List<Statement>)list);	:}
 								|
-								CLASS IDENTIFIER LEFTPARENTHESE expression_list RIGHTPARENTHESE COLON suite;
+								CLASS IDENTIFIER:identifier LEFTPARENTHESE expression_list:expressionList RIGHTPARENTHESE COLON suite: statementList
+									{: RESULT = new ClassStatement((String)identifier, (List<Expression>)expressionList, (List<Statement>)statementList);	:};
 								
 stmt_list					::= simple_statement:stmt SEMICOLON stmt_list:list
 									{: 
@@ -371,7 +376,8 @@ subscription				::= expression:expr1 LEFTSQUAREBRACKET expression:expr2 RIGHTSQU
 target						::= subscription:subscription
 									{: RESULT = subscription;	:}
 								|
-								expression FULLSTOP IDENTIFIER;
+								expression:expr FULLSTOP IDENTIFIER:identifier
+									{: RESULT = new FullstopExpression((Expression)expr, (String)identifier);	:};
 
 identifier_comma_list		::= COMMA IDENTIFIER:identifier identifier_comma_list:list
 									{: 
@@ -382,4 +388,5 @@ identifier_comma_list		::= COMMA IDENTIFIER:identifier identifier_comma_list:lis
 								/*epsilon*/
 									{: RESULT = new LinkedList<String>();	:};
 								
-expression_list				::= expression_comma_list;
+expression_list				::= expression_comma_list:list
+									{: RESULT = list;	:};
