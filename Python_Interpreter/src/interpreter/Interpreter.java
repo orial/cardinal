@@ -20,7 +20,8 @@ public class Interpreter {
 		{
 			try {
 				ParserCup parser = new ParserCup(new LekserLex(new InputStreamReader(System.in)));
-				Program program = (Program)parser.parse().value;
+				Program program = (Program)parser.debug_parse().value;
+				System.out.println("TU JESTEM!!!");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
