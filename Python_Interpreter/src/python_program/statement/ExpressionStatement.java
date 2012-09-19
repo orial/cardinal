@@ -1,5 +1,7 @@
 package python_program.statement;
 
+import org.armedbear.lisp.LispObject;
+
 import python_program.expression.Expression;
 
 public class ExpressionStatement extends Statement {
@@ -13,6 +15,12 @@ public class ExpressionStatement extends Statement {
 	@Override
 	public void print() {
 		expr.print();
+	}
+
+	@Override
+	public LispObject translate() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

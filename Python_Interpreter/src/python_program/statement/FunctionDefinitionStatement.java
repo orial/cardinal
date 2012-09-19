@@ -3,6 +3,8 @@ package python_program.statement;
 import java.util.Iterator;
 import java.util.List;
 
+import org.armedbear.lisp.LispObject;
+
 public class FunctionDefinitionStatement extends Statement {
 	
 	String identifier;
@@ -37,6 +39,12 @@ public class FunctionDefinitionStatement extends Statement {
 			System.out.println();
 		}
 		System.out.print(">>");
+	}
+
+	@Override
+	public LispObject translate() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
