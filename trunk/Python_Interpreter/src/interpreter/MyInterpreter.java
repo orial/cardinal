@@ -5,6 +5,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import org.armedbear.lisp.Cons;
+import org.armedbear.lisp.Interpreter;
+import org.armedbear.lisp.LispObject;
+
 import java_cup.runtime.Symbol;
 
 import parser.LekserLex;
@@ -12,10 +16,16 @@ import parser.ParserCup;
 import parser.sym;
 import python_program.Program;
 
-public class Interpreter {
+public class MyInterpreter {
 
 	public static void main(String args[])
 	{
+		 Interpreter interpreter = Interpreter.createInstance();
+		 //System.out.println(interpreter.eval("(+ 4 5)").toString());
+		
+		 LispObject result = interpreter.eval("(+ 4 5)");
+		 System.out.println(result.intValue());
+		 
 		if(args.length == 0)		//Uruchamia interpreter
 		{
 			try {
