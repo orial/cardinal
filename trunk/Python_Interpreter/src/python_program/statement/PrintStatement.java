@@ -3,6 +3,8 @@ package python_program.statement;
 import java.util.Iterator;
 import java.util.List;
 
+import org.armedbear.lisp.LispObject;
+
 import python_program.expression.Expression;
 
 public class PrintStatement extends Statement {
@@ -25,6 +27,12 @@ public class PrintStatement extends Statement {
 			System.out.print(", ");
 			iterator.next().print();
 		}
+	}
+
+	@Override
+	public LispObject translate() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

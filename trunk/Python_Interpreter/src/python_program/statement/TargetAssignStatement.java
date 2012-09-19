@@ -1,5 +1,7 @@
 package python_program.statement;
 
+import org.armedbear.lisp.LispObject;
+
 import python_program.expression.Expression;
 
 public class TargetAssignStatement extends Statement {
@@ -17,6 +19,12 @@ public class TargetAssignStatement extends Statement {
 		this.expr1.print();
 		System.out.print(" = ");
 		this.expr2.print();
+	}
+
+	@Override
+	public LispObject translate() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
