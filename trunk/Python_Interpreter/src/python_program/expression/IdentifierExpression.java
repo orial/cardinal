@@ -19,5 +19,9 @@ public class IdentifierExpression extends Expression {
 	public Types getType() {
 		return Types.nondefined_type;
 	}
+	
+	public String getIdentifier() {
+		return this.identifier;
+	}
 
 }

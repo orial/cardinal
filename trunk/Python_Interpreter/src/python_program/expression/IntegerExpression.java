@@ -19,5 +19,9 @@ public class IntegerExpression extends Expression {
 	public Types getType() {
 		return Types.int_type;
 	}
-
+	
+	@Override
+	public String toString() {
+		return value;	
+	}
 }

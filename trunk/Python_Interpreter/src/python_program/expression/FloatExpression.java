@@ -19,5 +19,10 @@ public class FloatExpression extends Expression {
 	public Types getType() {
 		return Types.float_type;
 	}
+	
+	@Override
+	public String toString() {
+		return value;
+	}
 
 }

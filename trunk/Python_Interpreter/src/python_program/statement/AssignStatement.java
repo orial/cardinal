@@ -1,5 +1,6 @@
 package python_program.statement;
 
+import org.armedbear.lisp.Interpreter;
 import org.armedbear.lisp.LispObject;
 
 import python_program.expression.Expression;
@@ -14,7 +15,7 @@ public class AssignStatement extends Statement {
 		this.identifier = identifier;
 		this.expression = expression;
 		
-		translate();
+		System.out.println(translate().getStringValue());
 	}
 	
 	@Override
@@ -26,8 +27,8 @@ public class AssignStatement extends Statement {
 
 	@Override
 	public LispObject translate() {
-		// TODO Auto-generated method stub
-		return null;
+		Interpreter interpreter = Interpreter.getInstance();
+		return interpreter.eval("(defvar " + this.identifier.getIdentifier() + " " + this.expression.toString() + ")\n");
 	}
 
 }
