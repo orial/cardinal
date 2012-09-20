@@ -24,4 +24,10 @@ public class IdentifierExpression extends Expression {
 		return this.identifier;
 	}
 
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

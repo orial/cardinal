@@ -21,4 +21,10 @@ public class ParenthesesExpression extends Expression{
 	public Types getType() {
 		return expression.getType();
 	}
+
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

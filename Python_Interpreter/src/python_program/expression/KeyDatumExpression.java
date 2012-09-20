@@ -24,4 +24,10 @@ public class KeyDatumExpression extends Expression {
 		return Types.none_type;
 	}
 
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
