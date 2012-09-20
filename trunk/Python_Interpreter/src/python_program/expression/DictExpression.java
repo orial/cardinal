@@ -34,4 +34,10 @@ public class DictExpression extends Expression {
 		return Types.dict_type;
 	}
 
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

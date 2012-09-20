@@ -35,4 +35,10 @@ public class ListExpression extends Expression {
 		return Types.list_type;
 	}
 
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

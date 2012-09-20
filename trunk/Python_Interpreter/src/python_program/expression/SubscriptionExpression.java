@@ -25,4 +25,10 @@ public class SubscriptionExpression extends Expression {
 		return expr2.getType();
 	}
 
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

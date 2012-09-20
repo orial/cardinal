@@ -37,4 +37,10 @@ public class LambdaExpression extends Expression {
 		return Types.function_type;
 	}
 
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

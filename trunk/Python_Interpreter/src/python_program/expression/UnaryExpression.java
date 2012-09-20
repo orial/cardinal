@@ -26,4 +26,10 @@ public class UnaryExpression extends Expression {
 		return expression.getType();
 	}
 
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

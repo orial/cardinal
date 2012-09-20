@@ -24,4 +24,10 @@ public class FullstopExpression extends Expression {
 		return Types.nondefined_type;
 	}
 
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

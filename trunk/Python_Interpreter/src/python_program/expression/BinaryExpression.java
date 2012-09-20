@@ -31,4 +31,10 @@ public class BinaryExpression extends Expression {
 		return expression1.getType();
 	}
 
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -24,4 +24,10 @@ public class IsExpression extends Expression {
 		return Types.boolean_type;
 	}
 
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
