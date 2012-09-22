@@ -1,5 +1,8 @@
 package python_program.expression;
 
+import org.armedbear.lisp.Interpreter;
+import org.armedbear.lisp.LispObject;
+
 import python_program.Types;
 
 public class IntegerExpression extends Expression {
@@ -19,9 +22,10 @@ public class IntegerExpression extends Expression {
 	public Types getType() {
 		return Types.int_type;
 	}
-	
+
 	@Override
-	public String toString() {
-		return value;	
+	public LispObject translate() {
+		return Interpreter.getInstance().eval(value);
 	}
+	
 }

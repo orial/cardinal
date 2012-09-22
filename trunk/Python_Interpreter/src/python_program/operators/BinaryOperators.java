@@ -51,4 +51,48 @@ public enum BinaryOperators {
 				break;
 		} 
 	}
+	
+	public String toString() {
+		switch(this){
+		case add: 
+			return "+";
+		case sub:
+			return "-";
+		case mult:
+			return "*";
+		case div:
+			return "/";
+		case mod:
+			System.out.print("%");
+			break;
+		case pow:
+			System.out.print("**");
+			break;
+		case less:
+			System.out.print("<");
+			break;
+		case greater:
+			System.out.print(">");
+			break;
+		case greaterorequal:
+			System.out.print(">=");
+			break;
+		case lessorequal:
+			System.out.print("<=");
+			break;
+		case equal:
+			System.out.print("==");
+			break;
+		case notequal:
+			System.out.print("!=");
+			break;
+		case and:
+			System.out.print("and");
+			break;
+		case or:
+			System.out.print("or");
+			break;
+		}
+		return null;
+	}
 }

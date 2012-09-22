@@ -1,5 +1,8 @@
 package python_program.expression;
 
+import org.armedbear.lisp.Interpreter;
+import org.armedbear.lisp.LispObject;
+
 import python_program.Types;
 
 public class IdentifierExpression extends Expression {
@@ -25,9 +28,12 @@ public class IdentifierExpression extends Expression {
 	}
 
 	@Override
-	public String toString() {
-		// TODO Auto-generated method stub
-		return null;
+	public LispObject translate() {
+		return Interpreter.getInstance().eval(identifier);
 	}
-
+	
+	@Override
+	public String toString() {
+		return this.identifier;
+	}
 }
