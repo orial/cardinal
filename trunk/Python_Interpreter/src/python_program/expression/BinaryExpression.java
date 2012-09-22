@@ -35,8 +35,7 @@ public class BinaryExpression extends Expression {
 
 	@Override
 	public LispObject translate() {
-		// TODO Auto-generated method stub
-		return null;
+		return operator.translate(this.expression1.translate(), this.expression2.translate());
 	}
 
 }
