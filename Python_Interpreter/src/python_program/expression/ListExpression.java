@@ -4,6 +4,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.armedbear.lisp.LispObject;
+
 import python_program.Types;
 
 public class ListExpression extends Expression {
@@ -36,7 +38,7 @@ public class ListExpression extends Expression {
 	}
 
 	@Override
-	public String toString() {
+	public LispObject translate() {
 		// TODO Auto-generated method stub
 		return null;
 	}

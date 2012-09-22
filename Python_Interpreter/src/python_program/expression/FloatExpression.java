@@ -1,5 +1,8 @@
 package python_program.expression;
 
+import org.armedbear.lisp.Interpreter;
+import org.armedbear.lisp.LispObject;
+
 import python_program.Types;
 
 public class FloatExpression extends Expression {
@@ -19,10 +22,10 @@ public class FloatExpression extends Expression {
 	public Types getType() {
 		return Types.float_type;
 	}
-	
-	@Override
-	public String toString() {
-		return value;
-	}
 
+	@Override
+	public LispObject translate() {
+		return Interpreter.getInstance().eval(value);
+	}
+	
 }

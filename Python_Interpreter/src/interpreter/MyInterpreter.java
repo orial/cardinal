@@ -5,6 +5,8 @@ import java.io.FileReader;
 import java.io.InputStreamReader;
 
 import org.armedbear.lisp.Interpreter;
+import org.armedbear.lisp.Lisp;
+import org.armedbear.lisp.LispInteger;
 import org.armedbear.lisp.LispObject;
 
 import parser.LekserLex;
@@ -19,6 +21,17 @@ public class MyInterpreter {
 		 //System.out.println(interpreter.eval("(+ 4 5)").toString());
 		
 		 LispObject result = interpreter.eval("(+ 4 5)");
+		 LispObject obj = new LispObject();
+		 LispObject obj2 = interpreter.eval("4");
+		 obj2 = obj2.add(5);
+		 obj2 = obj2.add(obj2);
+		 
+		 //LispObject obj3 = interpreter.eval("abc");
+		 //System.out.println(obj3.toString());
+		 
+		 //obj2.aset(0, 10);
+		 System.out.println(obj2.intValue());
+		 //System.out.println(interpreter.eval());
 		 System.out.println(result.intValue());
 		 
 		if(args.length == 0)		//Uruchamia interpreter

@@ -15,7 +15,7 @@ public class AssignStatement extends Statement {
 		this.identifier = identifier;
 		this.expression = expression;
 		
-		System.out.println(translate().getStringValue());
+		System.out.println(translate().princToString());
 	}
 	
 	@Override
@@ -28,7 +28,7 @@ public class AssignStatement extends Statement {
 	@Override
 	public LispObject translate() {
 		Interpreter interpreter = Interpreter.getInstance();
-		return interpreter.eval("(defvar " + this.identifier.getIdentifier() + " " + this.expression.toString() + ")\n");
+		return interpreter.eval("(defvar " + this.identifier.getIdentifier() + " " + this.expression.translate().princToString() + ")\n");
 	}
 
 }

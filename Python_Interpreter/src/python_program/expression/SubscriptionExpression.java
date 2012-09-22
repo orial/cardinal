@@ -1,5 +1,7 @@
 package python_program.expression;
 
+import org.armedbear.lisp.LispObject;
+
 import python_program.Types;
 
 public class SubscriptionExpression extends Expression {
@@ -26,7 +28,7 @@ public class SubscriptionExpression extends Expression {
 	}
 
 	@Override
-	public String toString() {
+	public LispObject translate() {
 		// TODO Auto-generated method stub
 		return null;
 	}

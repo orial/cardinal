@@ -1,5 +1,7 @@
 package python_program.expression;
 
+import org.armedbear.lisp.LispObject;
+
 import python_program.Types;
 import python_program.operators.BinaryOperators;
 
@@ -32,7 +34,7 @@ public class BinaryExpression extends Expression {
 	}
 
 	@Override
-	public String toString() {
+	public LispObject translate() {
 		// TODO Auto-generated method stub
 		return null;
 	}
