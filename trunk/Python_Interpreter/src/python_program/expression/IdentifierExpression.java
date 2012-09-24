@@ -28,12 +28,8 @@ public class IdentifierExpression extends Expression {
 	}
 
 	@Override
-	public LispObject translate() {
-		return Interpreter.getInstance().eval(identifier);
+	public String translate() {
+		return identifier;
 	}
 	
-	@Override
-	public String toString() {
-		return this.identifier;
-	}
 }

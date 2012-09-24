@@ -22,8 +22,8 @@ public class InputExpression extends Expression {
 	}
 
 	@Override
-	public LispObject translate() {
-		return Interpreter.getInstance().eval("(read)");
+	public String translate() {
+		return "(read)";
 	}
 
 }

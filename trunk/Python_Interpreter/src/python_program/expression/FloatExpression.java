@@ -24,8 +24,8 @@ public class FloatExpression extends Expression {
 	}
 
 	@Override
-	public LispObject translate() {
-		return Interpreter.getInstance().eval(value);
+	public String translate() {
+		return value;
 	}
 	
 }

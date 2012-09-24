@@ -39,7 +39,7 @@ public class FunctionExpression extends Expression {
 	}
 
 	@Override
-	public LispObject translate() {
+	public String translate() {
 		// TODO Auto-generated method stub
 		return null;
 	}

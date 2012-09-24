@@ -55,50 +55,36 @@ public enum BinaryOperators {
 		} 
 	}
 	
-	public LispObject translate(LispObject obj1, LispObject obj2) {
+	public String translate(String obj1, String obj2) {
 		switch(this){
 			case add: 
-				return obj1.add(obj2);
+				return "(+ " + obj1 + " " + obj2 + ")";
 			case sub:
-				return obj1.subtract(obj2);
+				return "(- " + obj1 + " " + obj2 + ")";
 			case mult:
-				return obj1.multiplyBy(obj2);
+				return "(* " + obj1 + " " + obj2 + ")";
 			case div:
-				return obj1.divideBy(obj2);
+				return "(/ " + obj1 + " " + obj2 + ")";
 			case mod:
-				return obj1.MOD(obj2);
+				return "(mod " + obj1 + " " + obj2 + ")";
 			case pow:
-				return Interpreter.getInstance().eval("(expt " + obj1.princToString() + " " + obj2.princToString() + " )");
+				return "(expt " + obj1 + " " + obj2 + " )";
 			case less:
-				return obj1.IS_LT(obj2);
+				return "(< " + obj1 + " " + obj2 + ")";
 			case greater:
-				return obj1.IS_GT(obj2);
+				return "(> " + obj1 + " " + obj2 + ")";
 			case greaterorequal:
-				return obj1.IS_GE(obj2);
+				return "(>= " + obj1 + " " + obj2 + ")";
 			case lessorequal:
-				return obj1.IS_LE(obj2);
+				return "(<= " + obj1 + " " + obj2 + ")";
 			case equal:
-				return obj1.IS_E(obj2);
+				return "(= " + obj1 + " " + obj2 + ")";
 			case notequal:
-				return obj1.IS_NE(obj2);
+				return "(/= " + obj1 + " " + obj2 + ")";
 			case and:
-				boolean b1 = obj1.getBooleanValue();
-				boolean b2 = obj2.getBooleanValue();
-				if(b1 && b2) {
-					return Interpreter.getInstance().eval("T");
-				}
-				else {
-					return Interpreter.getInstance().eval("NIL");
-				}
+				return "(and " + obj1 + " " + obj2 + ")";
 			case or:
-				boolean b3 = obj1.getBooleanValue();
-				boolean b4 = obj2.getBooleanValue();
-				if(b3 || b4) {
-					return Interpreter.getInstance().eval("T");
-				}
-				else {
-					return Interpreter.getInstance().eval("NIL");
-				}
+				return "(or " + obj1 + " " + obj2 + ")";
 		}
 		return null;
 	}

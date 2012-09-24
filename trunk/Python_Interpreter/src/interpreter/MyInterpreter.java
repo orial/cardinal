@@ -20,7 +20,7 @@ public class MyInterpreter {
 		 Interpreter interpreter = Interpreter.createInstance();
 		 //System.out.println(interpreter.eval("(+ 4 5)").toString());
 		
-		 LispObject result = interpreter.eval("(+ 4 5)");
+		 LispObject result = interpreter.eval("'(1 2 3 4)");
 		 LispObject obj = new LispObject();
 		 LispObject obj2 = interpreter.eval("4");
 		 obj2 = obj2.add(5);
@@ -32,7 +32,7 @@ public class MyInterpreter {
 		 //obj2.aset(0, 10);
 		 System.out.println(obj2.intValue());
 		 //System.out.println(interpreter.eval());
-		 System.out.println(result.intValue());
+		 System.out.println(result.princToString());
 		 
 		if(args.length == 0)		//Uruchamia interpreter
 		{

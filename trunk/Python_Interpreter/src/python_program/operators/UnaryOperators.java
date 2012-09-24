@@ -16,4 +16,17 @@ public enum UnaryOperators {
 				break;
 		}
 	}
+	
+	public String translate(String obj1) {
+		switch(this){
+		case add:
+			return "+ " + obj1;
+		case sub:
+			return "- " + obj1;
+		case not:
+			return "not " + obj1;
+		}
+		return null;
+		
+	}
 }
