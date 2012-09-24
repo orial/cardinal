@@ -1,5 +1,6 @@
 package python_program.expression;
 
+import org.armedbear.lisp.Interpreter;
 import org.armedbear.lisp.LispObject;
 
 import python_program.Types;
@@ -22,8 +23,7 @@ public class InputExpression extends Expression {
 
 	@Override
 	public LispObject translate() {
-		// TODO Auto-generated method stub
-		return null;
+		return Interpreter.getInstance().eval("(read)");
 	}
 
 }
