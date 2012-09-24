@@ -22,8 +22,8 @@ public class FalseExpression extends Expression {
 	}
 
 	@Override
-	public LispObject translate() {
-		return Interpreter.getInstance().eval("NIL");
+	public String translate() {
+		return "NIL";
 	}
 
 }

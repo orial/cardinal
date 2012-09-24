@@ -34,7 +34,7 @@ public class BinaryExpression extends Expression {
 	}
 
 	@Override
-	public LispObject translate() {
+	public String translate() {
 		return operator.translate(this.expression1.translate(), this.expression2.translate());
 	}
 

@@ -12,7 +12,7 @@ public class ExpressionStatement extends Statement {
 	public ExpressionStatement(Expression expr) {
 		this.expr = expr;
 		
-		translate();
+		System.out.println(translate().princToString());
 	}
 
 	@Override
@@ -21,20 +21,8 @@ public class ExpressionStatement extends Statement {
 	}
 
 	public LispObject translate() {
-		LispObject obj = expr.translate();
-		if(obj.integerp() == true) {
-			System.out.println(obj.intValue());
-		}
-		else if(obj.floatp() == true) {
-			System.out.println(obj.floatValue());
-		}
-		else if(obj.stringp() == true) {
-			System.out.println(obj.toString());
-		}
-		else {
-			System.out.println(obj.getBooleanValue());
-		}
-		return obj;
+		System.out.println(expr.translate());
+		return Interpreter.getInstance().eval(expr.translate());
 	}
 
 }

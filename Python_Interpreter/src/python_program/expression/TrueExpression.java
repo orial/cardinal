@@ -22,8 +22,8 @@ public class TrueExpression extends Expression {
 	}
 
 	@Override
-	public LispObject translate() {
-		return Interpreter.getInstance().eval("T");
+	public String translate() {
+		return "T";
 	}
 
 }

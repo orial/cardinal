@@ -27,7 +27,7 @@ public class IsExpression extends Expression {
 	}
 
 	@Override
-	public LispObject translate() {
+	public String translate() {
 		// TODO Auto-generated method stub
 		return null;
 	}
