@@ -1,7 +1,7 @@
 package python_program.statement;
 
-import org.armedbear.lisp.Interpreter;
-import org.armedbear.lisp.LispObject;
+import java.util.LinkedList;
+import java.util.List;
 
 import python_program.expression.Expression;
 
@@ -11,8 +11,6 @@ public class ExpressionStatement extends Statement {
 	
 	public ExpressionStatement(Expression expr) {
 		this.expr = expr;
-		
-		System.out.println(translate().princToString());
 	}
 
 	@Override
@@ -20,14 +18,11 @@ public class ExpressionStatement extends Statement {
 		expr.print();
 	}
 
-	public LispObject translate() {
-		//System.out.println(expr.translate());
-		return Interpreter.getInstance().eval(expr.translate());
-	}
-
 	@Override
-	public String toString() {
-		return expr.translate();
+	public List<String> translate() {
+		List<String> list = new LinkedList<String>();
+		list.add(expr.translate());
+		return list;
 	}
 
 }

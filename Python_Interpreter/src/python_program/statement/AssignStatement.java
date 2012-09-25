@@ -1,7 +1,7 @@
 package python_program.statement;
 
-import org.armedbear.lisp.Interpreter;
-import org.armedbear.lisp.LispObject;
+import java.util.LinkedList;
+import java.util.List;
 
 import python_program.expression.Expression;
 import python_program.expression.IdentifierExpression;
@@ -14,8 +14,6 @@ public class AssignStatement extends Statement {
 	public AssignStatement(IdentifierExpression identifier, Expression expression){
 		this.identifier = identifier;
 		this.expression = expression;
-		
-		System.out.println(translate().princToString());
 	}
 	
 	@Override
@@ -26,14 +24,10 @@ public class AssignStatement extends Statement {
 	}
 
 	@Override
-	public LispObject translate() {
-		Interpreter interpreter = Interpreter.getInstance();
-		return interpreter.eval("(defvar " + this.identifier.getIdentifier() + " " + this.expression.translate() + ")\n");
-	}
-
-	@Override
-	public String toString() {
-		return "(defvar " + this.identifier.getIdentifier() + " " + this.expression.translate() + ")";
+	public List<String> translate() {
+		List<String> list = new LinkedList<String>();
+		list.add("(defvar " + this.identifier.getIdentifier() + " " + this.expression.translate() + ")");
+		return list;
 	}
 
 }
