@@ -1,5 +1,7 @@
 package python_program.statement;
 
+import java.util.List;
+
 import org.armedbear.lisp.LispObject;
 
 public class PassStatement extends Statement {
@@ -12,13 +14,7 @@ public class PassStatement extends Statement {
 	}
 
 	@Override
-	public LispObject translate() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String toString() {
+	public List<String> translate() {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -117,7 +117,7 @@ module						::= simple_statement:stmt simple_statement_list:list
 								{: RESULT = list; :};
 
 statement_newline_list		::=	NEWLINE statement_newline_list:list
-								{:	RESULT = list; :} 
+								{: RESULT = list; :} 
 								|
 								statement:stmt statement_newline_list:list			//#5
 								{:	
@@ -129,7 +129,7 @@ statement_newline_list		::=	NEWLINE statement_newline_list:list
 								{: RESULT = new LinkedList<Statement>(); :}; 
 
 simple_statement_list		::= simple_statement:stmt simple_statement_list:list
-									{: 
+									{:
 										((List<Statement>)list).add((Statement)stmt);
 										RESULT = list;
 									:}
@@ -310,7 +310,7 @@ compound_statement			::= IF expression:expr COLON suite:list1 ELSE COLON suite:l
 									{: RESULT = new ClassStatement((String)identifier, (List<Expression>)expressionList, (List<Statement>)statementList);	:};
 								
 stmt_list					::= simple_statement:stmt SEMICOLON stmt_list:list
-									{: 
+									{:
 										((List<Statement>)list).add((Statement)stmt);
 										RESULT = list;
 									:}

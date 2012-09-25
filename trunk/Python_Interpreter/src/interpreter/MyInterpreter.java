@@ -15,37 +15,14 @@ public class MyInterpreter {
 
 	public static void main(String args[])
 	{
-		 Interpreter interpreter = Interpreter.createInstance();
-		 //System.out.println(interpreter.eval("(+ 4 5)").toString());
-		
-		 LispObject result = interpreter.eval("'(1 2 3 4)");
-		 LispObject obj = new LispObject();
-		 LispObject obj2 = interpreter.eval("4");
-		 obj2 = obj2.add(5);
-		 obj2 = obj2.add(obj2);
+		Interpreter interpreter = Interpreter.createInstance();
 		 
-		 //LispObject obj3 = interpreter.eval("abc");
-		 //System.out.println(obj3.toString());
-		 
-		 //obj2.aset(0, 10);
-		 System.out.println(obj2.intValue());
-		 //System.out.println(interpreter.eval());
-		 System.out.println(result.princToString());
-		 
-		if(args.length == 0)		//Uruchamia interpreter
-		{
-			try {
-				ParserCup parser = new ParserCup(new LekserLex(new InputStreamReader(System.in)));
-				Program program = (Program)parser.debug_parse().value;
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		else if(args.length == 1){	//Wczytuje z lini polecen nazwe pliku i go interpretuje
+		if(args.length == 1){	//Wczytuje z lini polecen nazwe pliku i go interpretuje
 			try {
 				ParserCup parser = new ParserCup(new LekserLex(new FileReader(args[0])));
 				Program program = (Program)parser.debug_parse().value;
 				program.print();
+				program.translate(interpreter);
 				
 			} catch (FileNotFoundException e) {
 				System.err.println("Error: Can't open file " + args[0]);
@@ -55,8 +32,12 @@ public class MyInterpreter {
 				System.exit(-1);
 			}
 		}
-		else{
+		else if(args.length > 1){
 			System.out.println("Error: Too many arguments");
+			System.exit(-1);
+		}
+		else {
+			System.out.println("Error: Missin");
 			System.exit(-1);
 		}
 	}

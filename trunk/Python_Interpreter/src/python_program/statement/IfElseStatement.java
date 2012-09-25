@@ -45,23 +45,7 @@ public class IfElseStatement extends Statement {
 	}
 
 	@Override
-	public LispObject translate() {
-		Interpreter interpreter = Interpreter.getInstance();
-		String toEval = "(cond (" + expression.translate();
-		
-		Iterator<Statement> iterator = this.ifStatementList.iterator();
-		while(iterator.hasNext()) {
-			toEval = toEval + " " + iterator.next().toString();
-		}
-		
-		toEval = toEval + ")";
-		System.out.println("ELSE: " + toEval);
-		return interpreter.eval(toEval);
-	}
-
-	@Override
-	public String toString() {
-		// TODO Auto-generated method stub
+	public List<String> translate() {
 		return null;
 	}
 
