@@ -25,4 +25,9 @@ public class ExpressionStatement extends Statement {
 		return Interpreter.getInstance().eval(expr.translate());
 	}
 
+	@Override
+	public String toString() {
+		return expr.translate();
+	}
+
 }

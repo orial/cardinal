@@ -7,4 +7,6 @@ public abstract class Statement {
 	public abstract void print();
 	
 	public abstract LispObject translate();
+	
+	public abstract String toString();
 }
