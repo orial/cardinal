@@ -3,6 +3,7 @@ package python_program.statement;
 import java.util.Iterator;
 import java.util.List;
 
+import org.armedbear.lisp.Interpreter;
 import org.armedbear.lisp.LispObject;
 
 import python_program.expression.Expression;
@@ -14,6 +15,8 @@ public class IfStatement extends Statement{
 	public IfStatement(Expression expression, List<Statement> statementList){
 		this.expression = expression;
 		this.statementList = statementList;
+		
+		System.out.println(translate().princToString());
 	}
 	
 	@Override
@@ -33,14 +36,29 @@ public class IfStatement extends Statement{
 
 	@Override
 	public LispObject translate() {
-		// TODO Auto-generated method stub
-		return null;
+		Interpreter interpreter = Interpreter.getInstance();
+		String toEval = "(cond (" + expression.translate();
+		
+		Iterator<Statement> iterator = this.statementList.iterator();
+		while(iterator.hasNext()) {
+			toEval = toEval + " " + iterator.next().toString();
+		}
+		
+		toEval = toEval + "))";
+		System.out.println(toEval);
+		return interpreter.eval(toEval);
 	}
 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return null;
+		String toEval = "(cond (" + expression.translate();
+		
+		Iterator<Statement> iterator = this.statementList.iterator();
+		while(iterator.hasNext()) {
+			toEval = toEval + " " + iterator.next().toString();
+		}
+		toEval = toEval + "))";
+		return toEval;
 	}
 
 }

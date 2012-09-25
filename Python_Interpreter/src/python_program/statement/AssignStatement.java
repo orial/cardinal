@@ -33,7 +33,7 @@ public class AssignStatement extends Statement {
 
 	@Override
 	public String toString() {
-		return "(defvar " + this.identifier.getIdentifier() + " " + this.expression.translate() + ")\n";
+		return "(defvar " + this.identifier.getIdentifier() + " " + this.expression.translate() + ")";
 	}
 
 }

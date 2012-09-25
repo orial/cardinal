@@ -26,8 +26,7 @@ public class ParenthesesExpression extends Expression{
 
 	@Override
 	public String translate() {
-		// TODO Auto-generated method stub
-		return null;
+		return expression.translate();
 	}
 
 }

@@ -3,6 +3,7 @@ package python_program.statement;
 import java.util.Iterator;
 import java.util.List;
 
+import org.armedbear.lisp.Interpreter;
 import org.armedbear.lisp.LispObject;
 
 import python_program.expression.Expression;
@@ -45,8 +46,17 @@ public class IfElseStatement extends Statement {
 
 	@Override
 	public LispObject translate() {
-		// TODO Auto-generated method stub
-		return null;
+		Interpreter interpreter = Interpreter.getInstance();
+		String toEval = "(cond (" + expression.translate();
+		
+		Iterator<Statement> iterator = this.ifStatementList.iterator();
+		while(iterator.hasNext()) {
+			toEval = toEval + " " + iterator.next().toString();
+		}
+		
+		toEval = toEval + ")";
+		System.out.println("ELSE: " + toEval);
+		return interpreter.eval(toEval);
 	}
 
 	@Override
