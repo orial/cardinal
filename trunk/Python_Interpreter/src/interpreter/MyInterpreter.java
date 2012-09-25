@@ -5,8 +5,6 @@ import java.io.FileReader;
 import java.io.InputStreamReader;
 
 import org.armedbear.lisp.Interpreter;
-import org.armedbear.lisp.Lisp;
-import org.armedbear.lisp.LispInteger;
 import org.armedbear.lisp.LispObject;
 
 import parser.LekserLex;
