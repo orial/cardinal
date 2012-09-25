@@ -31,4 +31,9 @@ public class AssignStatement extends Statement {
 		return interpreter.eval("(defvar " + this.identifier.getIdentifier() + " " + this.expression.translate() + ")\n");
 	}
 
+	@Override
+	public String toString() {
+		return "(defvar " + this.identifier.getIdentifier() + " " + this.expression.translate() + ")\n";
+	}
+
 }

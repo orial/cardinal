@@ -37,4 +37,10 @@ public class IfStatement extends Statement{
 		return null;
 	}
 
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
