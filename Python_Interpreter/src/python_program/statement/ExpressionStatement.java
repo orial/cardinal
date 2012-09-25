@@ -21,7 +21,7 @@ public class ExpressionStatement extends Statement {
 	}
 
 	public LispObject translate() {
-		System.out.println(expr.translate());
+		//System.out.println(expr.translate());
 		return Interpreter.getInstance().eval(expr.translate());
 	}
 
