@@ -1,10 +1,8 @@
 package python_program.statement;
 
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
-
-import org.armedbear.lisp.Interpreter;
-import org.armedbear.lisp.LispObject;
 
 import python_program.expression.Expression;
 
@@ -46,7 +44,27 @@ public class IfElseStatement extends Statement {
 
 	@Override
 	public List<String> translate() {
-		return null;
+String toEval = "(cond (" + expression.translate();
+		
+		Iterator<Statement> iterator = this.ifStatementList.iterator();
+		while(iterator.hasNext()) {
+			Iterator<String> stringIterator = iterator.next().translate().iterator();
+			while(stringIterator.hasNext()) {
+				toEval = toEval + " " + stringIterator.next();
+			}
+		}
+		toEval = toEval + ")(t ";
+		Iterator<Statement> iterator2 = this.elseStatementList.iterator();
+		while(iterator2.hasNext()) {
+			Iterator<String> stringIterator = iterator2.next().translate().iterator();
+			while(stringIterator.hasNext()) {
+				toEval = toEval + " " + stringIterator.next();
+			}
+		}
+		toEval = toEval + "))";
+		List<String> list = new LinkedList<String>();
+		list.add(toEval);
+		return list;
 	}
 
 }

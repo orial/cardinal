@@ -27,6 +27,7 @@ public class AssignStatement extends Statement {
 	public List<String> translate() {
 		List<String> list = new LinkedList<String>();
 		list.add("(defvar " + this.identifier.getIdentifier() + " " + this.expression.translate() + ")");
+		list.add("(setq " + this.identifier.getIdentifier() + " " + this.expression.translate() + ")");
 		return list;
 	}
 

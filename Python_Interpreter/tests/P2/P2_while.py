@@ -17,7 +17,6 @@ while (x > -10):
     else:
         print x
 
-x = z = 100
 while (x > 10):
     x = z / 2.0
     print x, z
@@ -27,7 +26,7 @@ while (x > 10):
         z = x+8
         y = 10000
 
-print y, z
+#print y, z
 
 ##while True:
 ##    break
