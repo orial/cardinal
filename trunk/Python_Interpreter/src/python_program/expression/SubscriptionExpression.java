@@ -29,8 +29,12 @@ public class SubscriptionExpression extends Expression {
 
 	@Override
 	public String translate() {
-		// TODO Auto-generated method stub
-		return null;
+		if(expr1.getType() == Types.list_type) {
+			return "(nth " + expr2.translate() + " " + expr1.translate() + ")";
+		}
+		else {
+			return null;
+		}
 	}
 
 }

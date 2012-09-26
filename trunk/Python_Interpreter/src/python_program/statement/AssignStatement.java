@@ -26,8 +26,8 @@ public class AssignStatement extends Statement {
 	@Override
 	public List<String> translate() {
 		List<String> list = new LinkedList<String>();
-		list.add("(defvar " + this.identifier.getIdentifier() + " " + this.expression.translate() + ")");
-		list.add("(setq " + this.identifier.getIdentifier() + " " + this.expression.translate() + ")");
+		//slist.add("(defvar " + this.identifier.getIdentifier() + " " + this.expression.translate() + ")");
+		list.add("(defparameter " + this.identifier.getIdentifier() + " " + this.expression.translate() + ")");
 		return list;
 	}
 

@@ -3,6 +3,8 @@ package python_program.operators;
 import org.armedbear.lisp.Interpreter;
 import org.armedbear.lisp.LispObject;
 
+import python_program.Types;
+
 public enum BinaryOperators {
 	add, sub, mult, div, mod, pow,
 	less, greater, lessorequal, greaterorequal, equal, notequal,
@@ -55,7 +57,12 @@ public enum BinaryOperators {
 		} 
 	}
 	
-	public String translate(String obj1, String obj2) {
+	public String translate(String obj1, String obj2, Types type1, Types type2) {
+		if(type1 == Types.list_type || type2 == Types.list_type) {
+			System.out.println("Error: Wrong types");
+			System.exit(0);
+		}
+		
 		switch(this){
 			case add: 
 				return "(+ " + obj1 + " " + obj2 + ")";

@@ -15,28 +15,10 @@ print 12345678
 
 g = {}
 h = {}
-print g == h
-print g > h
-print g < h
-print g >= h
-print g <= h
-print g != h
 
 g = {}
 h = {3:4}
-print g == h
-print g > h
-print g < h
-print g >= h
-print g <= h
-print g != h
 
 g = {}
 h = {3:4}
-print g == h
-print g > h
-print g < h
-print g >= h
-print g <= h
-print g != h
 
