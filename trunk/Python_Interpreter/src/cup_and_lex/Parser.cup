@@ -11,12 +11,10 @@ import java.util.Collections;
 
 import java_cup.runtime.*;
 
-parser code
-{:
-:}
-
 action code
 {:
+	public static List<String> function = new LinkedList<String>();
+	public static List<String> variables = new LinkedList<String>();
 :}
 
 
@@ -298,10 +296,14 @@ compound_statement			::= IF expression:expr COLON suite:list1 ELSE COLON suite:l
 									:}
 								|
 								DEF IDENTIFIER:identifier LEFTPARENTHESE RIGHTPARENTHESE COLON suite:list
-									{: RESULT = new FunctionDefinitionStatement((String)identifier, new LinkedList<String>(), (List<Statement>)list); 	:}
+									{: 
+										interpreter.FunctionsVariables.function.add((String) identifier);
+										RESULT = new FunctionDefinitionStatement((String)identifier, new LinkedList<String>(), (List<Statement>)list); 	
+									:}
 								|
 								DEF IDENTIFIER:identifier1 LEFTPARENTHESE IDENTIFIER:identifier2 identifier_comma_list:identifierList RIGHTPARENTHESE COLON suite:list
 									{: 
+										interpreter.FunctionsVariables.function.add((String) identifier1);
 										((List<String>)identifierList).add((String)identifier2);
 										RESULT = new FunctionDefinitionStatement((String)identifier1, (List<String>)identifierList, (List<Statement>)list); 	
 									:}

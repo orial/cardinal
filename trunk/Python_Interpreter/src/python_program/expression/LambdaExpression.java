@@ -1,5 +1,6 @@
 package python_program.expression;
 
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -13,6 +14,7 @@ public class LambdaExpression extends Expression {
 	Expression expr;
 	
 	public LambdaExpression(List<String> identifierList, Expression expr) {
+		Collections.reverse(identifierList);
 		this.identifierList = identifierList;
 		this.expr = expr;
 	}
@@ -41,8 +43,15 @@ public class LambdaExpression extends Expression {
 
 	@Override
 	public String translate() {
-		// TODO Auto-generated method stub
-		return null;
+		String s = "(lambda (";
+		Iterator<String> iterator = this.identifierList.iterator();
+		while(iterator.hasNext()) {
+			s = s + " " + iterator.next();
+		}
+		s = s + ")";
+		
+		s = s + this.expr.translate() + ")";
+		return s;
 	}
 
 }
