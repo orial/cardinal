@@ -1,10 +1,13 @@
 package python_program.expression;
 
+import interpreter.FunctionsVariables;
+
 import java.util.Iterator;
 import java.util.List;
 
 import org.armedbear.lisp.LispObject;
 
+import parser.ParserCup;
 import python_program.Types;
 
 public class FunctionExpression extends Expression {
@@ -40,12 +43,25 @@ public class FunctionExpression extends Expression {
 
 	@Override
 	public String translate() {
-		String s = "(" + this.expr.translate();
-		Iterator<Expression> iterator = this.expressionList.iterator();
-		while(iterator.hasNext()) {
-			s = s + " " + iterator.next().translate();
+		String s = null;
+		
+		if(FunctionsVariables.function.contains(this.expr.translate())) {
+			s = "(" + this.expr.translate();
+			Iterator<Expression> iterator = this.expressionList.iterator();
+			while(iterator.hasNext()) {
+				s = s + " " + iterator.next().translate();
+			}
+			s = s + ")";
 		}
-		s = s + ")";
+		else {
+			s = "(funcall " + this.expr.translate();
+			Iterator<Expression> iterator = this.expressionList.iterator();
+			while(iterator.hasNext()) {
+				s = s + " " + iterator.next().translate();
+			}
+			s = s + ")";
+		}
+		
 		return s;
 	}
 
