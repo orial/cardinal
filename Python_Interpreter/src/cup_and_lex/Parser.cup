@@ -301,7 +301,10 @@ compound_statement			::= IF expression:expr COLON suite:list1 ELSE COLON suite:l
 									{: RESULT = new FunctionDefinitionStatement((String)identifier, new LinkedList<String>(), (List<Statement>)list); 	:}
 								|
 								DEF IDENTIFIER:identifier1 LEFTPARENTHESE IDENTIFIER:identifier2 identifier_comma_list:identifierList RIGHTPARENTHESE COLON suite:list
-									{: RESULT = new FunctionDefinitionStatement((String)identifier1, (List<String>)identifierList, (List<Statement>)list); 	:}
+									{: 
+										((List<String>)identifierList).add((String)identifier2);
+										RESULT = new FunctionDefinitionStatement((String)identifier1, (List<String>)identifierList, (List<Statement>)list); 	
+									:}
 								|
 								CLASS IDENTIFIER:identifier COLON suite:list
 									{: RESULT = new ClassStatement((String)identifier, new LinkedList<Expression>(), (List<Statement>)list);	:}
