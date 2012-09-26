@@ -47,5 +47,4 @@ public class IfStatement extends Statement{
 		list.add(toEval);
 		return list;
 	}
-
 }

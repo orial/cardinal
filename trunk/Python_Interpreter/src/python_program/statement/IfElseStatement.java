@@ -44,7 +44,7 @@ public class IfElseStatement extends Statement {
 
 	@Override
 	public List<String> translate() {
-String toEval = "(cond (" + expression.translate();
+		String toEval = "(cond (" + expression.translate();
 		
 		Iterator<Statement> iterator = this.ifStatementList.iterator();
 		while(iterator.hasNext()) {
@@ -66,5 +66,4 @@ String toEval = "(cond (" + expression.translate();
 		list.add(toEval);
 		return list;
 	}
-
 }
