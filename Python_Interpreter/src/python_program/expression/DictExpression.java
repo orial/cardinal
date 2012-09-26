@@ -38,8 +38,14 @@ public class DictExpression extends Expression {
 
 	@Override
 	public String translate() {
-		// TODO Auto-generated method stub
-		return null;
+		String toReturn = "({} '(";
+		
+		Iterator<KeyDatumExpression> iterator = this.list.iterator();		
+		while(iterator.hasNext()) {
+			toReturn = toReturn + " " +iterator.next().translate();			
+		}
+		toReturn = toReturn + "))";
+		return toReturn;
 	}
 
 }

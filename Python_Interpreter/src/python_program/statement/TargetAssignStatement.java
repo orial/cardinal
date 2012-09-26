@@ -1,5 +1,6 @@
 package python_program.statement;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import org.armedbear.lisp.LispObject;
@@ -25,8 +26,11 @@ public class TargetAssignStatement extends Statement {
 
 	@Override
 	public List<String> translate() {
-		// TODO Auto-generated method stub
-		return null;
+		List<String> list = new LinkedList<String>();
+
+		list.add("(defvar " + this.expr1.translate() + " " + this.expr2.translate() + ")");
+		list.add("(setq " + this.expr1.translate() + " " + this.expr2.translate() + ")");
+		return list;
 	}
 
 }

@@ -28,8 +28,7 @@ public class KeyDatumExpression extends Expression {
 
 	@Override
 	public String translate() {
-		// TODO Auto-generated method stub
-		return null;
+		return "(" + expr1.translate() + " . " + expr2.translate() + ")";
 	}
 
 }

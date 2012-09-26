@@ -16,12 +16,13 @@ public class MyInterpreter {
 	public static void main(String args[])
 	{
 		Interpreter interpreter = Interpreter.createInstance();
+		interpreter.eval("(defun {} (pairs) (let ((h (make-hash-table :test 'equal))) (loop for (key value) on pairs by #'cddr do (setf (gethash key h) value)) h))");
 		 
 		if(args.length == 1){	//Wczytuje z lini polecen nazwe pliku i go interpretuje
 			try {
 				ParserCup parser = new ParserCup(new LekserLex(new FileReader(args[0])));
 				Program program = (Program)parser.debug_parse().value;
-				program.print();
+				//program.print();
 				program.translate(interpreter);
 				
 			} catch (FileNotFoundException e) {
@@ -37,7 +38,7 @@ public class MyInterpreter {
 			System.exit(-1);
 		}
 		else {
-			System.out.println("Error: Missin");
+			System.out.println("Error:Missing program argument");
 			System.exit(-1);
 		}
 	}

@@ -35,6 +35,7 @@ public class Program {
 		Iterator<String> it = list.iterator();
 		while(it.hasNext()) {
 			String next = it.next();
+			System.out.println("BBBBB" + next);
 			interpreter.eval(next);
 		}
 		interpreter.eval("(print \" \")");
