@@ -12,4 +12,4 @@ print C.x
 class D:
     x = 4
 
-print (C if True else D).x
+print D.x

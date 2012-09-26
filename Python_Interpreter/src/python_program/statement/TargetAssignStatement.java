@@ -3,8 +3,6 @@ package python_program.statement;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.armedbear.lisp.LispObject;
-
 import python_program.expression.Expression;
 
 public class TargetAssignStatement extends Statement {
