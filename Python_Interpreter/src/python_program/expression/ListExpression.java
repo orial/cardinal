@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.armedbear.lisp.Interpreter;
-import org.armedbear.lisp.LispObject;
+
 import python_program.Types;
 
 public class ListExpression extends Expression {
@@ -38,8 +38,6 @@ public class ListExpression extends Expression {
 
 	@Override
 	public String translate() {
-		
-		Interpreter interpreter = Interpreter.getInstance();
 		String list = "'(";
 
 		Iterator<Expression> iterator = this.list.iterator();

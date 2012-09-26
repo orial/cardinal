@@ -38,7 +38,6 @@ public class IfStatement extends Statement{
 		while(iterator.hasNext()) {
 			Iterator<String> stringIterator = iterator.next().translate().iterator();
 			while(stringIterator.hasNext()) {
-				System.out.println(toEval);
 				toEval = toEval + " " + stringIterator.next();
 			}
 		}

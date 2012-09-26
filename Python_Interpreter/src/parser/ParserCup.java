@@ -6,14 +6,38 @@
 
 package parser;
 
-import python_program.*;
-import python_program.expression.*;
-import python_program.operators.*;
-import python_program.statement.*;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Collections;
-import java_cup.runtime.*;
+
+import python_program.Program;
+import python_program.expression.BinaryExpression;
+import python_program.expression.Expression;
+import python_program.expression.FalseExpression;
+import python_program.expression.FloatExpression;
+import python_program.expression.FunctionExpression;
+import python_program.expression.IdentifierExpression;
+import python_program.expression.InputExpression;
+import python_program.expression.IntegerExpression;
+import python_program.expression.LambdaExpression;
+import python_program.expression.ListExpression;
+import python_program.expression.ParenthesesExpression;
+import python_program.expression.SubscriptionExpression;
+import python_program.expression.TrueExpression;
+import python_program.expression.UnaryExpression;
+import python_program.operators.BinaryOperators;
+import python_program.operators.UnaryOperators;
+import python_program.statement.AssignStatement;
+import python_program.statement.ExpressionStatement;
+import python_program.statement.FunctionDefinitionStatement;
+import python_program.statement.IfElseStatement;
+import python_program.statement.IfStatement;
+import python_program.statement.PassStatement;
+import python_program.statement.PrintStatement;
+import python_program.statement.ReturnStatement;
+import python_program.statement.Statement;
+import python_program.statement.TargetAssignStatement;
+import python_program.statement.WhileStatement;
 
 /** CUP v0.11a beta 20060608 generated parser.
   * @version Wed Sep 26 18:35:48 CEST 2012

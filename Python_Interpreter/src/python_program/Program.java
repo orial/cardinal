@@ -1,6 +1,5 @@
 package python_program;
 
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -35,7 +34,6 @@ public class Program {
 		Iterator<String> it = list.iterator();
 		while(it.hasNext()) {
 			String next = it.next();
-			System.out.println("BBBBB" + next);
 			interpreter.eval(next);
 		}
 		interpreter.eval("(print \" \")");

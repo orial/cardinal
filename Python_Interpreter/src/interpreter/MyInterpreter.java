@@ -2,14 +2,13 @@ package interpreter;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.InputStreamReader;
 
 import org.armedbear.lisp.Interpreter;
-import org.armedbear.lisp.LispObject;
 
+import python_program.Program;
 import parser.LekserLex;
 import parser.ParserCup;
-import python_program.Program;
+
 
 public class MyInterpreter {
 

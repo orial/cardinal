@@ -1,8 +1,5 @@
 package python_program.expression;
 
-import org.armedbear.lisp.Interpreter;
-import org.armedbear.lisp.LispObject;
-
 import python_program.Types;
 
 public class FloatExpression extends Expression {
