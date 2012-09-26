@@ -5,9 +5,6 @@ import interpreter.FunctionsVariables;
 import java.util.Iterator;
 import java.util.List;
 
-import org.armedbear.lisp.LispObject;
-
-import parser.ParserCup;
 import python_program.Types;
 
 public class FunctionExpression extends Expression {

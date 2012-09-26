@@ -4,8 +4,6 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import org.armedbear.lisp.LispObject;
-
 import python_program.Types;
 
 public class LambdaExpression extends Expression {

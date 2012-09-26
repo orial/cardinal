@@ -33,6 +33,10 @@ public class PrintStatement extends Statement {
 		List<String> list = new LinkedList<String>();
 		
 		Iterator<Expression> iterator = this.expressions.iterator();
+		if(iterator.hasNext() == false) {
+			list.add("(format t \"~%\")");
+		}
+		
 		while (iterator.hasNext()) {
 			list.add("(print " + iterator.next().translate() + ")");
 		}

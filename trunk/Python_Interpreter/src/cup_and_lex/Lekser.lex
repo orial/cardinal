@@ -106,7 +106,7 @@ comment			= #[^\n]*
 
 {float}				{	return symbol(sym.FLOAT, yytext());}
 {integer}			{	return symbol(sym.INTEGER, yytext());}
-{identifier}		{	return symbol(sym.IDENTIFIER, yytext());}
+{identifier}		{	return symbol(sym.IDENTIFIER, yytext().toUpperCase());}
 "."					{	return symbol(sym.FULLSTOP);}
 
 {WhiteSpace}		{	/*Ignore whitespaces*/}
