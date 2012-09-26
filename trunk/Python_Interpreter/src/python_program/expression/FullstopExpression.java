@@ -1,7 +1,5 @@
 package python_program.expression;
 
-import org.armedbear.lisp.LispObject;
-
 import python_program.Types;
 
 public class FullstopExpression extends Expression {

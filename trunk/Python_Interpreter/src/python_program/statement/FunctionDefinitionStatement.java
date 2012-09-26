@@ -1,9 +1,10 @@
 package python_program.statement;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
-
-import org.armedbear.lisp.LispObject;
 
 public class FunctionDefinitionStatement extends Statement {
 	
@@ -13,6 +14,7 @@ public class FunctionDefinitionStatement extends Statement {
 	
 	public FunctionDefinitionStatement(String identifier, List<String> identifierList, List<Statement> statementList) {
 		this.identifier = identifier;
+		Collections.reverse(identifierList);
 		this.identifierList = identifierList;
 		this.statementList = statementList;
 	}
@@ -43,8 +45,25 @@ public class FunctionDefinitionStatement extends Statement {
 
 	@Override
 	public List<String> translate() {
-		// TODO Auto-generated method stub
-		return null;
+		this.print();
+		List<String> list = new LinkedList<String>();
+		String s = "(defun " + this.identifier + "(";
+		Iterator<String> identifierIterator = this.identifierList.iterator();
+		while(identifierIterator.hasNext()){
+			s = s + " " + identifierIterator.next();
+		}
+		s = s+ ") ";
+		
+		Iterator<Statement> stmtIterator = this.statementList.iterator();
+		while(stmtIterator.hasNext()){
+			Iterator stringIterator = stmtIterator.next().translate().iterator();
+			while(stringIterator.hasNext()) {
+				s = s + stringIterator.next();
+			}
+		}
+		s = s + ")";
+		list.add(s);
+		return list;
 	}
 
 }
