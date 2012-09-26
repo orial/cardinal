@@ -1,7 +1,5 @@
 package python_program.expression;
 
-import org.armedbear.lisp.LispObject;
-
 import python_program.Types;
 import python_program.operators.BinaryOperators;
 

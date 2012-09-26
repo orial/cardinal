@@ -90,7 +90,6 @@ non terminal	program,
 precedence left LAMBDA;
 precedence left IF, ELSE;
 precedence left ASSIGN;
-precedence left FULLSTOP;
 precedence left OR;
 precedence left AND;
 precedence left NOT;
@@ -269,11 +268,8 @@ expression					::= INTEGER:value
 									{:
 										((List<String>)list).add((String)identifier);
 										RESULT = new LambdaExpression((List<String>)list, (Expression)expr);
-									:}
-								|
-								expression:expr FULLSTOP IDENTIFIER:identifier
-									{: RESULT = new FullstopExpression((Expression)expr, (String)identifier);	:};
-				
+									:};
+								
 compound_statement			::= IF expression:expr COLON suite:list1 ELSE COLON suite:list2
 									{:
 										RESULT = new IfElseStatement((Expression)expr, (List<Statement>)list1, (List<Statement>)list2);
@@ -300,13 +296,7 @@ compound_statement			::= IF expression:expr COLON suite:list1 ELSE COLON suite:l
 										interpreter.FunctionsVariables.function.add((String) identifier1);
 										((List<String>)identifierList).add((String)identifier2);
 										RESULT = new FunctionDefinitionStatement((String)identifier1, (List<String>)identifierList, (List<Statement>)list); 	
-									:}
-								|
-								CLASS IDENTIFIER:identifier COLON suite:list
-									{: RESULT = new ClassStatement((String)identifier, new LinkedList<Expression>(), (List<Statement>)list);	:}
-								|
-								CLASS IDENTIFIER:identifier LEFTPARENTHESE expression_list:expressionList RIGHTPARENTHESE COLON suite: statementList
-									{: RESULT = new ClassStatement((String)identifier, (List<Expression>)expressionList, (List<Statement>)statementList);	:};
+									:};
 								
 stmt_list					::= simple_statement:stmt SEMICOLON stmt_list:list
 									{:
@@ -354,11 +344,8 @@ subscription				::= expression:expr1 LEFTSQUAREBRACKET expression:expr2 RIGHTSQU
 									{: RESULT = new SubscriptionExpression((Expression)expr1, (Expression)expr2); :};
 
 target						::= subscription:subscription
-									{: RESULT = subscription;	:}
-								|
-								expression:expr FULLSTOP IDENTIFIER:identifier
-									{: RESULT = new FullstopExpression((Expression)expr, (String)identifier);	:};
-
+									{: RESULT = subscription;	:};
+								
 identifier_comma_list		::= COMMA IDENTIFIER:identifier identifier_comma_list:list
 									{: 
 										((List<String>)list).add((String)identifier);

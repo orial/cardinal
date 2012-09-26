@@ -44,7 +44,6 @@ public class FunctionDefinitionStatement extends Statement {
 
 	@Override
 	public List<String> translate() {
-		this.print();
 		List<String> list = new LinkedList<String>();
 		String s = "(defun " + this.identifier + "(";
 		Iterator<String> identifierIterator = this.identifierList.iterator();
@@ -55,7 +54,7 @@ public class FunctionDefinitionStatement extends Statement {
 		
 		Iterator<Statement> stmtIterator = this.statementList.iterator();
 		while(stmtIterator.hasNext()){
-			Iterator stringIterator = stmtIterator.next().translate().iterator();
+			Iterator<String> stringIterator = stmtIterator.next().translate().iterator();
 			while(stringIterator.hasNext()) {
 				s = s + stringIterator.next();
 			}
@@ -64,5 +63,4 @@ public class FunctionDefinitionStatement extends Statement {
 		list.add(s);
 		return list;
 	}
-
 }
