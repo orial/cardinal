@@ -41,7 +41,6 @@ public class WhileStatement extends Statement {
 			while(stringIterator.hasNext()) {
 				
 				toEval = toEval + " " + stringIterator.next();
-				System.out.println(toEval);
 			}
 		}
 		toEval = toEval + ")";
