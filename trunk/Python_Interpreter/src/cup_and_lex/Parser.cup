@@ -252,14 +252,8 @@ expression					::= INTEGER:value
 								LEFTSQUAREBRACKET expression_comma_list:list RIGHTSQUAREBRACKET
 									{: RESULT = new ListExpression((List<Expression>)list);	:}
 								|
-								LEFTCURLYBRACKET key_datum_comma_list:list RIGHTCURLYBRACKET
-									{: RESULT = new DictExpression((List<KeyDatumExpression>)list);	:}
-								|
 								subscription:value
 									{: RESULT = value; :}
-								|
-								expression:expr1 IS expression:expr2
-									{: RESULT = new IsExpression((Expression)expr1, (Expression)expr2);	:}
 								|
 								expression:expr LEFTPARENTHESE RIGHTPARENTHESE
 									{: RESULT = new FunctionExpression((Expression)expr, new LinkedList<Expression>());	:}
@@ -354,26 +348,6 @@ statement_list				::= statement_list:list statement:stmt
 										List<Statement> list = new LinkedList<Statement>();
 										list.addAll((List<Statement>)stmt);
 										RESULT = list;
-									:};
-
-key_datum					::= expression:expr1 COLON expression:expr2
-									{: RESULT = new KeyDatumExpression((Expression)expr1, (Expression)expr2);	:}
-								|
-								/*epsilon*/
-									{: RESULT = null;	:};
-
-key_datum_comma_list		::= key_datum_comma_list:list COMMA key_datum:keyDatum
-									{:
-										((List<KeyDatumExpression>)list).add((KeyDatumExpression)keyDatum);
-										RESULT = list;
-									:}
-								|
-								key_datum:keyDatum
-									{: List<KeyDatumExpression> list = new LinkedList<KeyDatumExpression>();
-										if((KeyDatumExpression)keyDatum != null) {
-											list.add((KeyDatumExpression)keyDatum);
-										}
-										RESULT = list;	
 									:};
 
 subscription				::= expression:expr1 LEFTSQUAREBRACKET expression:expr2 RIGHTSQUAREBRACKET
