@@ -1,8 +1,7 @@
 package python_program.statement;
 
+import java.util.LinkedList;
 import java.util.List;
-
-import org.armedbear.lisp.LispObject;
 
 public class PassStatement extends Statement {
 	
@@ -15,8 +14,7 @@ public class PassStatement extends Statement {
 
 	@Override
 	public List<String> translate() {
-		// TODO Auto-generated method stub
-		return null;
+		return new LinkedList<String>();
 	}
 
 }

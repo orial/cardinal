@@ -39,7 +39,11 @@ public class IfStatement extends Statement{
 		
 		Iterator<Statement> iterator = this.statementList.iterator();
 		while(iterator.hasNext()) {
-			toEval = toEval + " " + iterator.next().toString();
+			Iterator<String> stringIterator = iterator.next().translate().iterator();
+			while(stringIterator.hasNext()) {
+				System.out.println(toEval);
+				toEval = toEval + " " + stringIterator.next();
+			}
 		}
 		toEval = toEval + "))";
 		List<String> list = new LinkedList<String>();

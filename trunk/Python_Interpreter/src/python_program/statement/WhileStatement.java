@@ -1,9 +1,8 @@
 package python_program.statement;
 
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
-
-import org.armedbear.lisp.LispObject;
 
 import python_program.expression.Expression;
 
@@ -34,8 +33,21 @@ public class WhileStatement extends Statement {
 
 	@Override
 	public List<String> translate() {
-		// TODO Auto-generated method stub
-		return null;
+		String toEval = "(loop while " + expression.translate() + " do";
+		
+		Iterator<Statement> iterator = this.statementList.iterator();
+		while(iterator.hasNext()) {
+			Iterator<String> stringIterator = iterator.next().translate().iterator();
+			while(stringIterator.hasNext()) {
+				
+				toEval = toEval + " " + stringIterator.next();
+				System.out.println(toEval);
+			}
+		}
+		toEval = toEval + ")";
+		List<String> list = new LinkedList<String>();
+		list.add(toEval);
+		return list;
 	}
 
 }
